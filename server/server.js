@@ -16,6 +16,14 @@ app.get('/', (req, res) => {
 const userRoutes = require("./routes/users")
 app.use("/api/users", userRoutes)
 
+// Preferences Routes
+const prefRoutes = require("./routes/preferences")
+app.use("/api/preferences", prefRoutes)
+
+// Listings Routes
+const listingsRoutes = require("./routes/listings")
+app.use("/api/listings", listingsRoutes)
+
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`)
 })
