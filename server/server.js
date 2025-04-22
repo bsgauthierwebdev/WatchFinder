@@ -24,6 +24,10 @@ app.use("/api/preferences", prefRoutes)
 const listingsRoutes = require("./routes/listings")
 app.use("/api/listings", listingsRoutes)
 
+// Favorites Routes
+const favRoutes = require("./routes/favorites")
+app.use("/api/favorites", favRoutes)
+
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`)
 })
