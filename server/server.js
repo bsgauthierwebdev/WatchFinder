@@ -6,27 +6,28 @@ const app = express()
 const PORT = process.env.PORT || 5000
 
 app.use(express.json())
+app.use(cors())
 
 // Sample Route
-app.get('/', (req, res) => {
-    res.send('Welcome to the Watch Tracker API!')
-})
+// app.get('/', (req, res) => {
+//     res.send('Welcome to the Watch Tracker API!')
+// })
 
-// User Routes
+// Route Imports
 const userRoutes = require("./routes/users")
-app.use("/api/users", userRoutes)
-
-// Preferences Routes
 const prefRoutes = require("./routes/preferences")
-app.use("/api/preferences", prefRoutes)
-
-// Listings Routes
 const listingsRoutes = require("./routes/listings")
-app.use("/api/listings", listingsRoutes)
-
-// Favorites Routes
 const favRoutes = require("./routes/favorites")
+const matchRoutes = require("./routes/matches")
+const devRoutes = require("./routes/dev")
+
+// Use Routes
+app.use("/api/users", userRoutes)
+app.use("/api/preferences", prefRoutes)
+app.use("/api/listings", listingsRoutes)
 app.use("/api/favorites", favRoutes)
+app.use("/api/matches", matchRoutes)
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`)
