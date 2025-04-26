@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router()
 const pool = require("../db")
 const auth = require("../middleware/authMiddleware")
+const {checkOwnership} = require("../middleware/ownership")
 
 // ADD a favorite
 router.post("/", auth, async (req, res) => {
@@ -10,7 +11,9 @@ router.post("/", auth, async (req, res) => {
 
     try {
         await pool.query(
-            'INSERT INTO favorites (user_id, listing_id) VALUES ($1, $2)',
+            `INSERT INTO favorites (user_id, listing_id)
+             VALUES ($1, $2)
+             ON CONFLICT (user_id, listing_id) DO NOTHING`, // Avoid duplicate favorites
             [user_id, listing_id]
         )
 
@@ -44,14 +47,13 @@ router.get("/", auth, async (req, res) => {
 })
 
 // DELETE a favorite
-router.delete("/:listing_id", auth, async (req, res) => {
-    const user_id = req.user.user_id
-    const {listing_id} = req.params
+router.delete("/:favorite_id", auth, checkOwnership("favorites", "favorite_id"), async (req, res) => {
+    const {favorite_id} = req.params
 
     try {
         await pool.query(
-            'DELETE FROM favorites WHERE user_id = $1 AND listing_id = $2',
-            [user_id, listing_id]
+            'DELETE FROM favorites WHERE favorite_id = $1',
+            [favorite_id]
         )
 
         res.status(200).json({message: "Favorite removed"})
