@@ -1,11 +1,11 @@
 const express = require("express")
 const router = express.Router()
 const pool = require("../db")
-const auth = require("../middleware/authMiddleware")
-const attachUserId = require("../middleware/attachUserId")
+const authChain = require("../middleware/authChain");
+
 
 // POST: Add a matched result
-router.post("/", auth, attachUserId, async (req, res) => {
+router.post("/", authChain, async (req, res) => {
     const user_id = req.user_id
     const {preference_id, listing_id} = req.body
 
@@ -37,7 +37,7 @@ router.post("/", auth, attachUserId, async (req, res) => {
 })
 
 // GET: Retrieve matched results for the current user
-router.get("/", auth, attachUserId, async (req, res) => {
+router.get("/", authChain, async (req, res) => {
     const user_id = req.user_id
 
     try {
@@ -70,7 +70,7 @@ router.get("/", auth, attachUserId, async (req, res) => {
 })
 
 // DELETE: Remove a matched result
-router.delete("/:match_id", auth, attachUserId, async (req, res) => {
+router.delete("/:match_id", authChain, async (req, res) => {
     const {match_id} = req.params
     // console.log(match_id)
     const user_id = req.user_id

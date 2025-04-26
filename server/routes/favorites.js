@@ -1,11 +1,11 @@
 const express = require("express")
 const router = express.Router()
 const pool = require("../db")
-const auth = require("../middleware/authMiddleware")
-const attachUserId = require("../middleware/attachUserId")
+const authChain = require("../middleware/authChain");
+
 
 // ADD a favorite
-router.post("/", auth, attachUserId, async (req, res) => {
+router.post("/", authChain, async (req, res) => {
     const user_id = req.user_id
     const {listing_id} = req.body
 
@@ -26,7 +26,7 @@ router.post("/", auth, attachUserId, async (req, res) => {
 })
 
 // GET all favorites for a user
-router.get("/", auth, attachUserId, async (req, res) => {
+router.get("/", authChain, async (req, res) => {
     const user_id = req.user_id
 
     try {
@@ -47,7 +47,7 @@ router.get("/", auth, attachUserId, async (req, res) => {
 })
 
 // DELETE a favorite
-router.delete("/:listing_id", auth, attachUserId, async (req, res) => {
+router.delete("/:listing_id", authChain, async (req, res) => {
     const user_id = req.user_id
     // console.log("User ID: ", user_id)
     const {listing_id} = req.params
