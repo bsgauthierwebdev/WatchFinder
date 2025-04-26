@@ -2,7 +2,6 @@ const express = require("express")
 const router = express.Router()
 const pool = require("../db")
 const auth = require("../middleware/authMiddleware")
-const {checkOwnership} = require("../middleware/ownership")
 
 // ADD a favorite
 router.post("/", auth, async (req, res) => {
@@ -47,13 +46,28 @@ router.get("/", auth, async (req, res) => {
 })
 
 // DELETE a favorite
-router.delete("/:favorite_id", auth, checkOwnership("favorites", "favorite_id"), async (req, res) => {
-    const {favorite_id} = req.params
+router.delete("/:listing_id", auth, async (req, res) => {
+    const user_id = req.user.user_id
+    console.log("User ID: ", user_id)
+    const {listing_id} = req.params
+    console.log("Listing ID: ", listing_id)
 
     try {
+
+        // Check if favorite exists
+        const favoriteExists = await pool.query(
+            'SELECT * FROM favorites WHERE user_id = $1 AND listing_id = $2',
+            [user_id, listing_id]
+        )
+
+        if (favoriteExists.rows.length === 0) {
+            return res.status(404).json({error: "Favorite not found"})
+        }
+
+        // Delete the favorite
         await pool.query(
-            'DELETE FROM favorites WHERE favorite_id = $1',
-            [favorite_id]
+            'DELETE FROM favorites WHERE user_id = $1 AND listing_id = $2',
+            [user_id, listing_id]
         )
 
         res.status(200).json({message: "Favorite removed"})
