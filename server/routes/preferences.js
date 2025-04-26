@@ -89,7 +89,7 @@ router.get("/", auth, async (req, res) => {
         return res.status(200).json(prefs.rows[0])
     } catch (err) {
         console.error("Get preferences error: ", err.message)
-        res.status(200).json({error: "Failed to get preferences"})
+        res.status(500).json({error: "Failed to get preferences"})
     }
 })
 
