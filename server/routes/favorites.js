@@ -2,10 +2,11 @@ const express = require("express")
 const router = express.Router()
 const pool = require("../db")
 const auth = require("../middleware/authMiddleware")
+const attachUserId = require("../middleware/attachUserId")
 
 // ADD a favorite
-router.post("/", auth, async (req, res) => {
-    const user_id = req.user.user_id
+router.post("/", auth, attachUserId, async (req, res) => {
+    const user_id = req.user_id
     const {listing_id} = req.body
 
     try {
@@ -25,8 +26,8 @@ router.post("/", auth, async (req, res) => {
 })
 
 // GET all favorites for a user
-router.get("/", auth, async (req, res) => {
-    const user_id = req.user.user_id
+router.get("/", auth, attachUserId, async (req, res) => {
+    const user_id = req.user_id
 
     try {
         const favorites = await pool.query(
@@ -46,11 +47,11 @@ router.get("/", auth, async (req, res) => {
 })
 
 // DELETE a favorite
-router.delete("/:listing_id", auth, async (req, res) => {
-    const user_id = req.user.user_id
-    console.log("User ID: ", user_id)
+router.delete("/:listing_id", auth, attachUserId, async (req, res) => {
+    const user_id = req.user_id
+    // console.log("User ID: ", user_id)
     const {listing_id} = req.params
-    console.log("Listing ID: ", listing_id)
+    // console.log("Listing ID: ", listing_id)
 
     try {
 

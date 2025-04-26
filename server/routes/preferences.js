@@ -2,10 +2,11 @@ const express = require("express")
 const router = express.Router()
 const pool = require("../db")
 const auth = require("../middleware/authMiddleware")
+const attachUserId = require("../middleware/attachUserId")
 
 // CREATE or UPDATE preferences
-router.post('/', auth, async (req, res) => {
-    const user_id = req.user.user_id
+router.post('/', auth, attachUserId, async (req, res) => {
+    const user_id = req.user_id
     const {
         platforms,
         brands,
@@ -73,8 +74,8 @@ router.post('/', auth, async (req, res) => {
 })
 
 // GET preferences for current user
-router.get("/", auth, async (req, res) => {
-    const user_id = req.user.user_id
+router.get("/", auth, attachUserId, async (req, res) => {
+    const user_id = req.user_id
 
     try {
         const prefs = await pool.query(

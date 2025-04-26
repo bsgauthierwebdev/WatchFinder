@@ -2,10 +2,11 @@ const express = require("express")
 const router = express.Router()
 const pool = require("../db")
 const auth = require("../middleware/authMiddleware")
+const attachUserId = require("../middleware/attachUserId")
 
 // POST: Add a matched result
-router.post("/", auth, async (req, res) => {
-    const user_id = req.user.user_id
+router.post("/", auth, attachUserId, async (req, res) => {
+    const user_id = req.user_id
     const {preference_id, listing_id} = req.body
 
     try {
@@ -36,8 +37,8 @@ router.post("/", auth, async (req, res) => {
 })
 
 // GET: Retrieve matched results for the current user
-router.get("/", auth, async (req, res) => {
-    const user_id = req.user.user_id
+router.get("/", auth, attachUserId, async (req, res) => {
+    const user_id = req.user_id
 
     try {
         // Get all matched results for the user, join with listings to get detailed information
@@ -69,11 +70,11 @@ router.get("/", auth, async (req, res) => {
 })
 
 // DELETE: Remove a matched result
-router.delete("/:match_id", auth, async (req, res) => {
+router.delete("/:match_id", auth, attachUserId, async (req, res) => {
     const {match_id} = req.params
-    console.log(match_id)
-    const user_id = req.user.user_id
-    console.log(user_id)
+    // console.log(match_id)
+    const user_id = req.user_id
+    // console.log(user_id)
 
     try {
         // Check if matched result belongs to the user
