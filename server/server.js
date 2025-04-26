@@ -19,7 +19,6 @@ const prefRoutes = require("./routes/preferences")
 const listingsRoutes = require("./routes/listings")
 const favRoutes = require("./routes/favorites")
 const matchRoutes = require("./routes/matches")
-const devRoutes = require("./routes/dev")
 
 // Use Routes
 app.use("/api/users", userRoutes)
