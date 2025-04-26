@@ -43,7 +43,7 @@ router.get("/", auth, async (req, res) => {
         // Get all matched results for the user, join with listings to get detailed information
         const matchedResults = await pool.query(
             `SELECT
-                m.matched_id AS match_id, 
+                match_id, 
                 m.preference_id, 
                 m.listing_id, 
                 l.* 
@@ -65,6 +65,40 @@ router.get("/", auth, async (req, res) => {
     } catch (err) {
         console.error("Get matched results error: ", err.message)
         res.status(500).json({error: "Failed to get matched results"})
+    }
+})
+
+// DELETE: Remove a matched result
+router.delete("/:match_id", auth, async (req, res) => {
+    const {match_id} = req.params
+    console.log(match_id)
+    const user_id = req.user.user_id
+    console.log(user_id)
+
+    try {
+        // Check if matched result belongs to the user
+        const match = await pool.query(
+            `SELECT m.* FROM matched_results m
+             JOIN preferences p ON m.preference_id = p.preference_id 
+             WHERE m.match_id = $1 AND p.user_id = $2`,
+            [match_id, user_id]
+        )
+
+        if (match.rows.length === 0) {
+            return res.status(404).json({error: "Matched result not found or not authorized"})
+        }
+
+        // Delete the matched result
+        await pool.query(
+            `DELETE FROM matched_results WHERE match_id = $1`,
+            [match_id]
+        )
+
+        res.status(200).json({message: "Matched result deleted"})
+
+    } catch (err) {
+        console.error("Delete matched result error: ", err.message)
+        res.status(500).json({error: "Failed to delete matched result"})
     }
 })
 
