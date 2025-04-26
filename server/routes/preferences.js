@@ -68,7 +68,7 @@ router.post('/', auth, async (req, res) => {
         }
     } catch (err) {
         console.error("Preferences error: ", err.message)
-        res.status(500).json({error: "Failed to safe preferences"})
+        res.status(500).json({error: "Failed to save preferences"})
     }
 })
 
