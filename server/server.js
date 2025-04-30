@@ -14,6 +14,7 @@ app.use(cors())
 // })
 
 // Route Imports
+const authRoutes = require("./routes/auth")
 const userRoutes = require("./routes/users")
 const prefRoutes = require("./routes/preferences")
 const listingsRoutes = require("./routes/listings")
@@ -21,6 +22,7 @@ const favRoutes = require("./routes/favorites")
 const matchRoutes = require("./routes/matches")
 
 // Use Routes
+app.use("/api/auth", authRoutes)
 app.use("/api/users", userRoutes)
 app.use("/api/preferences", prefRoutes)
 app.use("/api/listings", listingsRoutes)
