@@ -39,6 +39,10 @@ const addUser = async (req, res) => {
             return res.status(401).json({message: "Email already in use"})
         }
 
+        if (trimmedPassword.length < 8) {
+            return res.status(400).json({error: "Password must be at least 8 characters"})
+        }
+
         const hashed = await bcrypt.hash(trimmedPassword, 10)
         const newUser = await pool.query(
             'INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING user_id, username, email',
