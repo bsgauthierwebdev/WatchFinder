@@ -25,6 +25,11 @@ const addUser = async (req, res) => {
             return res.status(401).json({message: "Username already in use"})
         }
 
+        const emailCheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        if (!emailCheck.test(trimmedEmail)) {
+            return res.status(400).json({error: "Invalid email format"})
+        }
+
         const emailInUse = await pool.query(
             'SELECT * FROM users WHERE email = $1',
             [trimmedEmail]
