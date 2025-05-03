@@ -22,7 +22,7 @@ const addUser = async (req, res) => {
         )
 
         if (usernameInUse.rows.length > 0) {
-            return res.status(401).json({message: "Username already in use"})
+            return res.status(409).json({message: "Username already in use"})
         }
 
         const emailCheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -36,7 +36,7 @@ const addUser = async (req, res) => {
         )
 
         if (emailInUse.rows.length > 0) {
-            return res.status(401).json({message: "Email already in use"})
+            return res.status(409).json({message: "Email already in use"})
         }
 
         if (trimmedPassword.length < 8) {
