@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 const sendEmail = require("../utils/sendEmail")
 const crypto = require("crypto")
 const dotenv = require("dotenv")
+const upload = require("../middleware/uploadMiddleware")
 dotenv.config()
 
 
@@ -195,6 +196,36 @@ const updatePassword = async (req, res) => {
     }
 }
 
+// PUT: Update profile pic
+const updateProfilePic = async (req, res) => {
+    try {
+        const authHeader = req.header("Authorization")
+        if (!authHeader || !authHeader.startsWith("Bearer ")) {
+            return res.status(401).json({error: "Unauthorized"})
+        }
+
+        const token = authHeader.replace("Bearer ", "").trim()
+        const data = jwt.verify(token, JWT_SECRET)
+        const userId = data.user_id
+
+        if (!req.file) {
+            return res.status(400).json({error: "No image uploaded"})
+        }
+
+        const imageUrl = path.posix.join("/uploads", req.file.filename) // Stored path
+
+        await pool.query(
+            'UPDATE users SET profile_img_url = $1 WHERE user_id = $2',
+            [imageUrl, userId]
+        )
+
+        res.status(200).json({message: "Profile picture updated", imageUrl})
+    } catch (err) {
+        console.error("Error updating profile image: ", err.message)
+        res.status(500).json({error: "Could not update user image"})
+    }
+}
+
 // POST: Forgot password
 const forgotPassword = async (req, res) => {
     const {email} = req.body
@@ -282,4 +313,4 @@ const deleteAccount = async (req, res) => {
     }
 }
 
-module.exports = {authorizeUser, logout, updateUsername, updateEmail, updatePassword, forgotPassword, resetPassword, deleteAccount}
+module.exports = {authorizeUser, logout, updateUsername, updateEmail, updatePassword, updateProfilePic, forgotPassword, resetPassword, deleteAccount}
