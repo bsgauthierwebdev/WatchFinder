@@ -32,45 +32,83 @@ const addListing = async (req, res) => {
     }
 }
 
-// Get all listings
-const getAllListings = async (req, res) => {
-    const {platform, price_min, price_max, brand} = req.query
+// Get user's listings
+const getUserListings = async (req, res) => {
+    const {
+        platform,
+        brand,
+        movement,
+        price_min,
+        price_max,
+        case_size_min,
+        case_size_max,
+        sort,
+        limit = 10,
+        page = 1
+    } = req.query
 
     try {
-        let query = 'SELECT * FROM listings WHERE 1=1'
-        let queryParams = []
+        // Start building query
+        let query = `SELECT * FROM listings WHERE 1 = 1`
+        let countQuery = `SELECT COUNT(*) FROM listings WHERE 1 = 1`
+        const values = []
+        const countValues = []
 
-        if (platform) {
-            query += ' AND platform = $' + (queryParams.length + 1)
-            queryParams.push(platform)
+        const appendCondition = (field, operator, value) => {
+            values.push(value)
+            countValues.push(value)
+            const paramIndex = values.length
+            query += ` AND ${field} ${operator} $${paramIndex}`
+            countQuery += ` AND ${field} ${operator} $${paramIndex}`
         }
 
-        if (price_min) {
-            query += ' AND price >= $' + (queryParams + 1)
-            queryParams.push(price_min)
+        // Apply filters
+        if (platform) appendCondition("platform", "ILIKE", `%${platform}%`)
+        if (brand) appendCondition("brand", "ILIKE", `%${brand}%`)
+        if (movement) appendCondition("movement", "ILIKE", `%${movement}%`)
+        if (price_min) appendCondition("price", ">=", price_min)
+        if (price_max) appendCondition("price", "<=", price_max)
+        if (case_size_min) appendCondition("case_size", ">=", case_size_min)
+        if (case_size_max) appendCondition("case_size", "<=", case_size_max)
+
+        // Sorting
+        const sortOptions = {
+            price_asc: "price ASC",
+            price_desc: "price DESC",
+            date_newest: "created_at DESC",
+            date_oldest: "created_at ASC"
         }
+        query += ` ORDER BY ${sortOptions[sort] || "created_at DESC"}`
 
-        if (price_max) {
-            query += ' AND price <= $' + (queryParams + 1)
-            queryParams.push(price_max)
-        }
+        // Pagination
+        const pageInt = parseInt(page)
+        const limitInt = parseInt(limit)
+        const offset = (pageInt - 1) * limitInt
 
-        if (brand) {
-            query += ' AND brand = $' + (queryParams + 1)
-            queryParams.push(brand)
-        }
+        values.push(limitInt, offset)
+        query += ` LIMIT $${values.length - 1} OFFSET $${values.length}`
+        
+        // Run queries
+        const listings = await pool.query(query, values)
+        const count = await pool.query(countQuery, countValues)
+        const total = parseInt(count.rows[0].count)
+        const totalPages = Math.ceil(total / limitInt)
 
-        const listings = await pool.query(query, queryParams)
+        // if (listings.rows.length === 0) {
+        //     return res.status(404).json({error: "No listings found"})
+        // }
 
-        if (listings.rows.length === 0 ) {
-            return res.status(404).json({error: "No listings found"})
-        }
 
-        res.status(200).json(listings.rows)
+        res.status(200).json({
+            total,
+            totalPages,
+            currentPage: pageInt,
+            results: listings.rows
+        })
 
     } catch (err) {
-        console.error("Get listings error: ", err.message)
-        res.status(500).json({error: "Failed to get listings"})
+        console.error("Error fetching filtered listings: ", err.message)
+        res.status(500).json({error: "Failed to fetch listings"})
     }
 }
 
@@ -123,4 +161,4 @@ const deleteListing = async (req, res) => {
     }
 }
 
-module.exports = {addListing, getAllListings, getSingleListing, deleteListing}
+module.exports = {addListing, getUserListings, getSingleListing, deleteListing}
