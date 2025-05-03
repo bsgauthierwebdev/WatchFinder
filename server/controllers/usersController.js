@@ -158,8 +158,16 @@ const updatePassword = async (req, res) => {
 
         const {currentPassword, newPassword} = req.body
 
-        if (!currentPassword | !newPassword) {
+        if (!currentPassword || !newPassword) {
             return res.status(400).json({error: "Current and new password are required"})
+        }
+
+        if (currentPassword.trim() === newPassword.trim()) {
+            return res.status(400).json({error: "New password cannot be the same as the last password"})
+        }
+
+        if (newPassword.trim().length < 8) {
+            return res.status(400).json({error: "Password must be at least 8 characters"})
         }
 
         const userRes = await pool.query(
