@@ -53,48 +53,94 @@ const logout = async (req, res) => {
     res.json({message: "Logged out successfully"})
 }
 
-// PUT: Update username and/or email
-const updateAccount = async (req, res) => {
+// PUT: Update username
+const updateUsername = async (req, res) => {
     try {
-        const authHeader = req.header("Authorization")
-        if (!authHeader || !authHeader.startsWith("Bearer ")) {
-            return res.status(401).json({error: "Authorization header missing or malformed"})
+        const token = req.header("Authorization")?.replace("Bearer ", "").trim()
+        if (!token) {
+            return res.status(401).json({error: "Missing or invalid token"})
         }
 
-        const token = authHeader.replace("Bearer ", "").trim()
-        const decoded = jwt.verify(token, JWT_SECRET)
-        const userId = decoded.user_id
-
-        const {username, email} = req.body
-
-        const trimmedUsername = username.trim()
-        const trimmedEmail = email.trim()
-
-        // Simple validation
-        if (!trimmedUsername || !trimmedEmail) {
-            return res.status(400).json({error: "Username and email are required"})
+        const data = jwt.verify(token, JWT_SECRET)
+        const userId = data?.user_id
+        if (!userId) {
+            return res.status(400).json({error: "Invalid token payload"})
         }
 
-        // Optional: Check if the email or username is already taken
-        const userCheck = await pool.query(
-            'SELECT * FROM users WHERE (username = $1 OR email = $2) AND user_id != $3',
-            [trimmedUsername, trimmedEmail, userId]
+        const {username} = req.body
+        const trimmedUsername = username?.trim()
+
+        if (!trimmedUsername) {
+            return res.status(400).json({error: "Please enter your updated username"})
+        }
+
+        // Check if username already exists
+        const inUse = await pool.query(
+            'SELECT * FROM users WHERE username = $1',
+            [trimmedUsername]
         )
 
-        if (userCheck.rows.length > 0) {
-            return res.status(409).json({error: "Username or email already exists"})
+        if (inUse.rows.length > 0) {
+            return res.status(409).json({error: "Username already exists"})
         }
 
-        // Update user info
         await pool.query(
-            'UPDATE users SET username = $1, email = $2 WHERE user_id = $3',
-            [trimmedUsername, trimmedEmail, userId]
+            'UPDATE users SET username = $1 WHERE user_id = $2',
+            [trimmedUsername, userId]
         )
 
-        res.status(201).json({message: "User info updated successfully"})
+        res.status(200).json({message: `Username updated to ${trimmedUsername}`})
     } catch (err) {
-        console.error("Update error: ", err.message)
-        res.status(500).json({error: "Failed to update user"})
+        console.error("Update Error: ", err.message)
+        res.status(500).json({error: "Failed to update username"})
+    }
+}
+
+// PUT: Update email address
+const updateEmail = async (req, res) => {
+    try {
+        const token = req.header("Authorization")?.replace("Bearer ", "").trim()
+    if (!token) {
+        return res.status(401).json({error: "Invalid or missing token"})
+    }
+
+    const data = jwt.verify(token, JWT_SECRET)
+    const userId = data?.user_id
+    if (!userId) {
+        return res.status(400).json({error: "Invalid token payload"})
+    }
+
+    const {email} = req.body
+    const trimmedEmail = email.trim()
+    if (!trimmedEmail) {
+        return res.status(400).json({error: "Please enter your updated email"})
+    }
+
+    // Check if email is in valid format
+    const emailCheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailCheck.test(trimmedEmail)) {
+        return res.status(400).json({error: "Invalid email format"})
+    }
+
+    // Check if email already exists
+    const inUse = await pool.query(
+        'SELECT * FROM users WHERE email = $1',
+        [trimmedEmail]
+    )
+
+    if (inUse.rows.length > 0) {
+        return res.status(409).json({error: "Email address already exists"})
+    }
+
+    await pool.query(
+        'UPDATE users SET email = $1 WHERE user_id = $2',
+        [trimmedEmail, userId]
+    )
+
+    res.status(200).json({message: `Email address updated to ${trimmedEmail}`})
+    } catch (err) {
+        console.error("Error updating email: ", err.message)
+        res.status(500).json({error: "Email could not be updated"})
     }
 }
 
@@ -228,4 +274,4 @@ const deleteAccount = async (req, res) => {
     }
 }
 
-module.exports = {authorizeUser, logout, updateAccount, updatePassword, forgotPassword, resetPassword, deleteAccount}
+module.exports = {authorizeUser, logout, updateUsername, updateEmail, updatePassword, forgotPassword, resetPassword, deleteAccount}

@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const {authorizeUser, logout, updateAccount, updatePassword, forgotPassword, resetPassword, deleteAccount} = require("../controllers/usersController")
+const {authorizeUser, logout, updateUsername, updateEmail, updatePassword, forgotPassword, resetPassword, deleteAccount} = require("../controllers/usersController")
 
 // DASHBOARD ROUTE
 router.get("/dashboard", authorizeUser)
@@ -8,8 +8,11 @@ router.get("/dashboard", authorizeUser)
 // LOGOUT USER
 router.post("/logout", logout)
 
-// UPDATE USERNAME / EMAIL
-router.put("/update", updateAccount)
+// UPDATE USERNAME
+router.put("/update-username", updateUsername)
+
+// UPDATE EMAIL
+router.put("/update-email", updateEmail)
 
 // UPDATE PASSWORD
 router.put("/change-password", updatePassword)
