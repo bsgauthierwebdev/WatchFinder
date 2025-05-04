@@ -26,7 +26,7 @@ const authorizeUser = async (req, res) => {
 
         // Inline query to get user data from dB
         const result = await pool.query(
-            'SELECT user_id, username, email FROM users WHERE user_id = $1',
+            'SELECT user_id, username, email, profile_img_url FROM users WHERE user_id = $1',
             [decoded.user_id]
         )
 
@@ -39,7 +39,8 @@ const authorizeUser = async (req, res) => {
         res.json({
             user_id: user.user_id,
             username: user.username,
-            email: user.email
+            email: user.email,
+            profile_img_url: user.profile_img_url
         })
 
     } catch (err) {
