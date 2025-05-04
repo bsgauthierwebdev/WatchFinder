@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 const sendEmail = require("../utils/sendEmail")
 const crypto = require("crypto")
 const dotenv = require("dotenv")
-const upload = require("../middleware/uploadMiddleware")
+const path = require("path")
 dotenv.config()
 
 
