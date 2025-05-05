@@ -61,15 +61,17 @@ const registerUser = async (req, res) => {
 
 // POST: Login user
 const loginUser = async (req, res) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        return res.status(400).json({errors: errors.array()})
+    }
+    
     const {email, password} = req.body
-
-    const trimmedEmail = email.trim()
-    const trimmedPassword = password.trim()
 
     try {
         const user = await pool.query(
             'SELECT * FROM users WHERE email = $1',
-            [trimmedEmail]
+            [email]
         )
 
         // console.log(user.rows[0])
@@ -78,7 +80,7 @@ const loginUser = async (req, res) => {
             return res.status(401).json({error: "Invalid email or password"})
         }
 
-        const valid = await bcrypt.compare(trimmedPassword, user.rows[0].password)
+        const valid = await bcrypt.compare(password, user.rows[0].password)
 
         // console.log(valid)
 
