@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const upload = require("../middleware/uploadMiddleware")
+const {updateUsernameValidation, updateEmailValidation, updatePasswordValidation, forgotPasswordValidation, resetPasswordValidation} = require("../middleware/authValidator")
 const {authorizeUser, logout, updateUsername, updateEmail, updatePassword, forgotPassword, resetPassword, deleteAccount, updateProfilePic} = require("../controllers/usersController")
 
 // DASHBOARD ROUTE
@@ -10,22 +11,22 @@ router.get("/dashboard", authorizeUser)
 router.post("/logout", logout)
 
 // UPDATE USERNAME
-router.put("/update-username", updateUsername)
+router.put("/update-username", updateUsernameValidation, updateUsername)
 
 // UPDATE EMAIL
-router.put("/update-email", updateEmail)
+router.put("/update-email", updateEmailValidation, updateEmail)
 
 // UPDATE PASSWORD
-router.put("/change-password", updatePassword)
+router.put("/change-password", updatePasswordValidation, updatePassword)
 
 // UPDATE PROFILE IMAGE
 router.put("/update-profile-pic", upload.single("profile_img"), updateProfilePic)
 
 // FORGOT PASSWORD
-router.post("/forgot-password", forgotPassword)
+router.post("/forgot-password", forgotPasswordValidation, forgotPassword)
 
 // RESET PASSWORD
-router.post("/reset-password/:token", resetPassword)
+router.post("/reset-password/:token", resetPasswordValidation, resetPassword)
 
 // DELETE ACCOUNT
 router.delete("/delete", deleteAccount)
