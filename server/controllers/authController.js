@@ -2,6 +2,7 @@ const pool = require('../db')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const dotenv = require("dotenv")
+const {validationResult} = require("express-validator")
 dotenv.config()
 
 
@@ -9,44 +10,45 @@ const JWT_SECRET = process.env.JWT_SECRET || 'supersecret'
 
 // POST: Register new user
 const addUser = async (req, res) => {
-    const {username, email, password} = req.body
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        return res.status(400).json({errors: errors.array()})
+    }
 
-    const trimmedUsername = username.trim()
-    const trimmedEmail = email.trim()
-    const trimmedPassword = password.trim()
+    const {username, email, password} = req.body
 
     try {
         const usernameInUse = await pool.query(
             'SELECT * FROM users WHERE username = $1',
-            [trimmedUsername]
+            [username]
         )
 
         if (usernameInUse.rows.length > 0) {
-            return res.status(409).json({message: "Username already in use"})
+            return res.status(409).json({error: "Username already in use"})
         }
 
-        const emailCheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-        if (!emailCheck.test(trimmedEmail)) {
-            return res.status(400).json({error: "Invalid email format"})
-        }
+        // const emailCheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        // if (!emailCheck.test(email)) {
+        //     return res.status(400).json({error: "Invalid email format"})
+        // }
 
         const emailInUse = await pool.query(
             'SELECT * FROM users WHERE email = $1',
-            [trimmedEmail]
+            [email]
         )
 
         if (emailInUse.rows.length > 0) {
-            return res.status(409).json({message: "Email already in use"})
+            return res.status(409).json({error: "Email already in use"})
         }
 
-        if (trimmedPassword.length < 8) {
-            return res.status(400).json({error: "Password must be at least 8 characters"})
-        }
+        // if (password.length < 8) {
+        //     return res.status(400).json({error: "Password must be at least 8 characters"})
+        // }
 
-        const hashed = await bcrypt.hash(trimmedPassword, 10)
+        const hashed = await bcrypt.hash(password, 10)
         const newUser = await pool.query(
             'INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING user_id, username, email',
-            [trimmedUsername, trimmedEmail, hashed]
+            [username, email, hashed]
         )
 
         return res.status(201).json(newUser.rows[0])
