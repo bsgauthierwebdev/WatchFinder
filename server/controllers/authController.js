@@ -9,7 +9,7 @@ dotenv.config()
 const JWT_SECRET = process.env.JWT_SECRET || 'supersecret' 
 
 // POST: Register new user
-const addUser = async (req, res) => {
+const registerUser = async (req, res) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
         return res.status(400).json({errors: errors.array()})
@@ -60,7 +60,7 @@ const addUser = async (req, res) => {
 }
 
 // POST: Login user
-const login = async (req, res) => {
+const loginUser = async (req, res) => {
     const {email, password} = req.body
 
     const trimmedEmail = email.trim()
@@ -96,4 +96,4 @@ const login = async (req, res) => {
     }
 }
 
-module.exports = {addUser, login}
+module.exports = {registerUser, loginUser}
