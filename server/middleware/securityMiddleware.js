@@ -12,6 +12,7 @@ const limiter = rateLimit({
 // Export as an array for easy integration
 const securityMiddleware = [
     helmet(),
+    helmet.hidePoweredBy(), // Sanitizes the X-Powered-By information
     xss(),
     limiter
 ]
