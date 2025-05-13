@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useAuth } from "../context/AuthContext"
 import { useNavigate } from "react-router-dom"
 import axiosInstance from "../api/axiosInstance"
-import styles from "./Login.module.css"
+import "../styles/Login.css"
 
 const Login = () => {
   const [email, setEmail] = useState("")
@@ -29,25 +29,25 @@ const Login = () => {
   }
 
   return (
-    <div className = {styles.container}>
-      <h2 className={styles.title}>Login</h2>
-      {error && <div className = {styles.error}>{error}</div>}
-      <form className={styles.form} onSubmit = {handleSubmit}>
+    <div className = "login-container">
+      <h2 className="login-title">Login</h2>
+      {error && <div className = "login-error">{error}</div>}
+      <form className="login-form" onSubmit = {handleSubmit}>
         <input 
           type = "email"
           placeholder = "Email"
-          className = {styles.input}
+          className = "login-input"
           value = {email}
           onChange = {(e) => setEmail(e.target.value)}
         />
         <input 
           type = "password"
           placeholder = "Password"
-          className = {styles.input}
+          className = "login-input"
           value = {password}
           onChange = {(e) => setPassword(e.target.value)}
         />
-        <button type = "submit" className={styles.button}>
+        <button type = "submit" className="login-button">
           Login
         </button>
       </form>

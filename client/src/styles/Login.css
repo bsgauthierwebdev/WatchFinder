@@ -1,4 +1,4 @@
-.container {
+.login-container {
     max-width: 400px;
     margin: 100px auto;
     padding: 30px;
@@ -8,26 +8,26 @@
     background-color: #fff;
 }
 
-.title {
+.login-title {
     font-size: 28px;
     font-weight: 600;
     text-align: center;
     margin-bottom: 20px;
 }
 
-.form {
+.login-form {
     display: flex;
     flex-direction: column;
 }
 
-.input {
+.login-input {
     padding: 12px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
-.button {
+.login-button {
     padding: 12px;
     background-color: #007bff;
     color: #fff;
@@ -38,11 +38,11 @@
     transition: background-color 0.2s ease;
 }
 
-.button:hover {
+.login-button:hover {
     background-color: #0056b3;
 }
 
-.error {
+.login-error {
     color: red;
     font-size: 14px;
     margin-bottom: 10px;text-align: center;
