@@ -9,8 +9,6 @@ import Favorites from "./pages/Favorites"
 import Preferences from "./pages/Preferences"
 import MatchedResults from "./pages/MatchedResults"
 import ProtectedRoute from "./components/ProtectedRoute"
-import Test from "./pages/Test"
-
 
 const App = () => {
   return (
@@ -18,7 +16,6 @@ const App = () => {
       <Router>
         <Navbar />
         <Routes>
-          <Route path = "/" element = {<Test />} />
           <Route path = "/login" element = {<Login />} />
           <Route path = "/register" element = {<Register />} />
           <Route 
