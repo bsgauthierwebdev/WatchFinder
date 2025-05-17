@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 5000
 app.use(express.json())
 
 const corsOptions = {
-    origin: process.env.CLIENT_URL || "http://localhost:3000", // Allow only my front-end
+    origin: process.env.CLIENT_URL || "http://localhost:5173", // Allow only my front-end
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }
