@@ -1,9 +1,10 @@
-import React from 'react'
+import "../styles/Preferences.css"
 
 const Preferences = () => {
   return (
-    <div>
-      
+    <div className = "preferences-container">
+      <h1>Preferences</h1>
+      <p>Set your search preferences for watches here.</p>
     </div>
   )
 }

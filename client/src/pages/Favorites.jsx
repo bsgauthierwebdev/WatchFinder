@@ -1,9 +1,10 @@
-import React from 'react'
+import "../styles/Favorites.css"
 
 const Favorites = () => {
   return (
-    <div>
-      
+    <div className = "favorites-container">
+      <h1>Favorites</h1>
+      <p>Here are your saved favorite watches.</p>
     </div>
   )
 }
