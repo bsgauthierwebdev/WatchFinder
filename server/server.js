@@ -14,6 +14,9 @@ const corsOptions = {
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }
+
+// console.log("CORS origin is set to: ", corsOptions.origin)
+
 app.use(cors(corsOptions))
 
 // Path for uploading files
