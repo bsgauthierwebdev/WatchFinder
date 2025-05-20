@@ -1,6 +1,5 @@
 const helmet = require("helmet")
 const rateLimit = require("express-rate-limit")
-const xss = require("xss-clean")
 
 // Rate limiter configuration
 const limiter = rateLimit({
@@ -13,7 +12,6 @@ const limiter = rateLimit({
 const securityMiddleware = [
     helmet(),
     helmet.hidePoweredBy(), // Sanitizes the X-Powered-By information
-    xss(),
     limiter
 ]
 

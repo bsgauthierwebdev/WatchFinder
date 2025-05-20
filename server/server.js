@@ -1,4 +1,5 @@
 const express = require('express')
+const helmet = require("helmet")
 const cors = require('cors')
 require('dotenv').config()
 const path = require("path")
@@ -7,14 +8,14 @@ const securityMiddleware = require("./middleware/securityMiddleware")
 const app = express()
 const PORT = process.env.PORT || 5000
 
-app.use(express.json())
-
+app.use(helmet())
 const corsOptions = {
     origin: process.env.CLIENT_URL || "http://localhost:3000", // Allow only my front-end
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }
 app.use(cors(corsOptions))
+app.use(express.json())
 
 // Path for uploading files
 app.use("/uploads", express.static(path.join(__dirname, "uploads")))
