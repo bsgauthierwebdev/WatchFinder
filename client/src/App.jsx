@@ -7,6 +7,7 @@ import Preferences from "./pages/Preferences"
 import Favorites from "./pages/Favorites"
 import MatchedResults from "./pages/MatchedResults"
 import Navbar from "./components/Navbar"
+import ProtectedRoute from "./components/ProtectedRoute"
 
 const App = () => {
   return (
@@ -14,7 +15,14 @@ const App = () => {
       <Router>
         <Navbar />
         <Routes>
-          <Route path = "/" element = {<Dashboard />} />
+          <Route 
+            path = "/" 
+            element = {
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
           <Route path = "/login" element = {<Login />} />
           <Route path = "/register" element = {<Register />} />
           <Route path = "/listings" element = {<Listings />} />
