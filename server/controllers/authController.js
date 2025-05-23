@@ -98,4 +98,27 @@ const loginUser = async (req, res) => {
     }
 }
 
-module.exports = {registerUser, loginUser}
+// GET: Get user info
+const getUserInfo = async (req, res) => {
+    try {
+        const userId = req.user.user_id
+        console.log(userId)
+
+        const result = await pool.query(
+            'SELECT user_id, username, email FROM users WHERE user_id = $1',
+            [userId]
+        )
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({error: "User not found"})
+        }
+
+        res.json(result.rows[0])
+
+    } catch (err) {
+        console.error("Error fetching user: ", err.message)
+        res.status(500).json({error: "Server error"})
+    }
+}
+
+module.exports = {registerUser, loginUser, getUserInfo}

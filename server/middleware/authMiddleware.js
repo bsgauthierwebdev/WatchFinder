@@ -9,6 +9,7 @@ const auth = (req, res, next) => {
         }
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
+        // console.log("Decoded token: ", decoded)
         req.user = decoded // Attach user data to request
 
         next() // Proceed to the next middleware or route handler
