@@ -1,0 +1,59 @@
+import { createContext, useContext, useState, useEffect } from "react";
+import {getToken, setToken, removeToken} from "../utils/auth"
+import axios from "axios"
+
+const AuthContext = createContext()
+
+export const useAuth = () => useContext(AuthContext)
+
+const AuthProvider = ({children}) => {
+    const [user, setUser] = useState(null)
+    const [loading, setLoading] = useState(true)
+
+    const fetchUser = async () => {
+        const token = getToken()
+        if (!token) {
+            setLoading(false)
+            return
+        }
+
+        try {
+            const res = await axios.get("/api/auth/me", {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            setUser(res.data)
+        } catch (err) {
+            console.error("Error fetching user: ", err.message)
+            removeToken()
+            setUser(null)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    useEffect(() => {
+        fetchUser()
+    }, [])
+
+    const login = async (email, password) => {
+        const res = await axios.post("/api/auth/login", {email, password})
+        const token = res.data.token
+        setToken(token)
+        await fetchUser()
+    }
+
+    const logout = () => {
+        removeToken()
+        setUser(null)
+    }
+
+    return (
+        <AuthContext.Provider value = {{user, login, logout, loading}}>
+            {children}
+        </AuthContext.Provider>
+    )
+}
+
+export default AuthProvider
