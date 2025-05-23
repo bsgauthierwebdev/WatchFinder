@@ -16,7 +16,7 @@ const Dashboard = () => {
       }
       
       try {
-        const res = await fetch("http://localhost:8800/api/auth/me", {
+        const res = await fetch("http://localhost:8800/api/users/me", {
           headers: {
             Authorization: `Bearer ${token}`
           }
