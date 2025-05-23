@@ -19,7 +19,7 @@ const App = () => {
           <Route path = "/" element = {<Landing />} />
           <Route path = "/login" element = {<Login />} />
           <Route 
-            path = "/" 
+            path = "/dashboard" 
             element = {
               <ProtectedRoute>
                 <Dashboard />
