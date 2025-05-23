@@ -15,7 +15,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'supersecret'
 const getUserInfo = async (req, res) => {
     try {
         const userId = req.user.user_id
-        console.log(userId)
+        // console.log(userId)
 
         const result = await pool.query(
             'SELECT user_id, username, email FROM users WHERE user_id = $1',
