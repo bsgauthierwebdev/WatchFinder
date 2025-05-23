@@ -1,8 +1,12 @@
 const express = require('express')
 const router = express.Router()
 const upload = require("../middleware/uploadMiddleware")
+const auth = require("../middleware/authMiddleware")
 const {updateUsernameValidation, updateEmailValidation, updatePasswordValidation, forgotPasswordValidation, resetPasswordValidation} = require("../middleware/authValidator")
-const {authorizeUser, logout, updateUsername, updateEmail, updatePassword, forgotPassword, resetPassword, deleteAccount, updateProfilePic} = require("../controllers/usersController")
+const {getUserInfo, authorizeUser, logout, updateUsername, updateEmail, updatePassword, forgotPassword, resetPassword, deleteAccount, updateProfilePic} = require("../controllers/usersController")
+
+// GET USER INFO
+router.get("/me", auth, getUserInfo)
 
 // DASHBOARD ROUTE
 router.get("/dashboard", authorizeUser)
