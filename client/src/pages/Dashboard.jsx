@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import {useNavigate} from "react-router-dom"
 import {getToken} from "../utils/auth"
+import "../styles/dashboard.css"
 
 const Dashboard = () => {
   const [user, setUser] = useState(null)
