@@ -7,14 +7,14 @@ import Listings from "./pages/Listings"
 import Preferences from "./pages/Preferences"
 import Favorites from "./pages/Favorites"
 import MatchedResults from "./pages/MatchedResults"
-// import Navbar from "./components/Navbar"
+import Navbar from "./components/Navbar"
 import ProtectedRoute from "./components/ProtectedRoute"
 
 const App = () => {
   return (
     <div>
       <Router>
-        {/* <Navbar /> */}
+        <Navbar />
         <Routes>
           <Route path = "/" element = {<Landing />} />
           <Route path = "/login" element = {<Login />} />
