@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
+import "../styles/login.css"
 
 const Login = () => {
   const [email, setEmail] = useState("")
@@ -24,23 +25,30 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      <h2>Login</h2>
+      <h2 className = "login-title">Login</h2>
       <form onSubmit = {handleSubmit} className="login-form">
-        <label>Email</label>
+        <label htmlFor = "email" className = "login-label">Email</label>
         <input 
+          className = "login-input"
+          id = "email"
           type="email"
           value = {email}
           onChange = {(e) => setEmail(e.target.value)}
           required 
         />
+        <label htmlFor = "password" className = "login-label">Password</label>
         <input 
+          className = "login-input"
+          id = "password"
           type="password"
           value = {password}
           onChange = {(e) => setPassword(e.target.value)}
           required 
         />
-        {error && <p className = "error">{error}</p>}
-        <button type = "submit">Log In</button>
+
+        {error && <p className = "login-error">{error}</p>}
+
+        <button type = "submit" className = "login-btn">Log In</button>
       </form>
     </div>
   )
