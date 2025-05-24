@@ -1,5 +1,3 @@
-// context/AuthContext.jsx
-
 import { createContext, useContext, useState, useEffect } from "react"
 import axios from "axios"
 import { getToken, setToken, removeToken } from "../utils/auth"
