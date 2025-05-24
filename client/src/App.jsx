@@ -9,10 +9,11 @@ import Favorites from "./pages/Favorites"
 import MatchedResults from "./pages/MatchedResults"
 import Navbar from "./components/Navbar"
 import ProtectedRoute from "./components/ProtectedRoute"
+import "./App.css"
 
 const App = () => {
   return (
-    <div>
+    <div className = "main-content">
       <Router>
         <Navbar />
         <Routes>
