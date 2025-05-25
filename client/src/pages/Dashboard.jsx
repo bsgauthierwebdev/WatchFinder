@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import {useNavigate} from "react-router-dom"
 import {getToken} from "../utils/auth"
 import "../styles/dashboard.css"
+import DashboardPreferencesCard from "../components/DashboardPreferencesCard"
 
 const Dashboard = () => {
   const [user, setUser] = useState(null)
@@ -28,6 +29,7 @@ const Dashboard = () => {
         }
 
         const data = await res.json()
+        // console.log(data)
         setUser(data)
 
       } catch (err) {
@@ -47,28 +49,22 @@ const Dashboard = () => {
   return (
     <div className="dashboard-container">
       <h1>Welcome, {user.username}!</h1>
-      <p>Email: {user.email}</p>
-
-      <hr />
-
       <div className="dashboard-preferences">
-        <h2>Your Preferences</h2>
-        <p>(Preferences UI will go here)</p>
-      </div>
-
-      <div className="dashboard-listings">
-        <h2>Match Listings</h2>
-        <p>(Listings UI will go here)</p>
-      </div>
-
-      <div className="dashboard-favorites">
-        <h2>Favorites</h2>
-        <p>(Favorites UI will go here)</p>
-      </div>
-
-      <div className="dashboard-matches">
-        <h2>Matched Results</h2>
-        <p>(Matched Results UI will go here)</p>
+        <DashboardPreferencesCard 
+          case_size_min={user.case_size_min}
+          case_size_max={user.case_size_max}
+          price_min={user.price_min}
+          price_max={user.price_max}
+          movements={user.movements}
+          strap_styles={user.strap_styles}
+          watch_styles={user.watch_styles}
+          dial_colors={user.dial_colors}
+          condition={user.condition}
+          platforms={user.platforms}
+          brands={user.brands}
+          seller_location={user.seller_location}
+          frequency={user.frequency}
+        />
       </div>
     </div>
   )
