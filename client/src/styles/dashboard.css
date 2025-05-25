@@ -1,7 +1,54 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 .dashboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
     padding: 2rem;
-    flex-grow: 1;
+    background: radial-gradient(#2637ee, #2a1265);
+    color: #fff;
+    /* margin: 0 auto; */
+}
+
+.dashboard-container h1 {
+    font-size: 2.5rem;
+    color: #fff;
+    margin-bottom: 0.5rem;
+}
+
+.dashboard-container p {
+    font-size: 1rem;
+    color: #808080;
+}
+
+hr {
+    margin: 2rem 0;
+    border: 0;
+    border-top: 1px solid #ddd;
+}
+
+.dashboard-preferences,
+.dashboard-listings,
+.dashboard-favorites,
+.dashboard-matches {
     background-color: #fff;
-    max-width: 1200px;
-    margin: 0 auto;
+    padding: 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-preferences h2,
+.dashboard-listings h2,
+.dashboard-favorites h2,
+.dashboard-matches h2 {
+    margin-bottom: 0.75rem;
+    font-size: 1.5rem;
+    color: #333;
 }
