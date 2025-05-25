@@ -17,23 +17,30 @@ const getUserInfo = async (req, res) => {
         const userId = req.user.user_id
         // console.log(userId)
 
-        const result = await pool.query(
-            `SELECT u.user_id, u.username, u.email, 
-                p.*, m.*
+        const userResult = await pool.query(
+            `SELECT u.user_id, u.username, u.email, p.*
              FROM users u 
              LEFT JOIN preferences p ON u.user_id = p.user_id
-             LEFT JOIN matched_results m on u.user_id = m.user_id
              WHERE u.user_id = $1`,
             [userId]
         )
 
-        if (result.rows.length === 0) {
+        if (userResult.rows.length === 0) {
             return res.status(404).json({error: "User not found"})
         }
 
-        // console.log(result.rows)
+        const userData = userResult.rows[0]
 
-        res.json(result.rows[0])
+        const matchesResult = await pool.query(
+            'SELECT * FROM matched_results WHERE user_id = $1',
+            [userId]
+        )
+
+        userData.matched_results = matchesResult.rows
+
+        // console.log("User data: ", userData)
+
+        res.json(userData)
 
     } catch (err) {
         console.error("Error fetching user: ", err.message)
