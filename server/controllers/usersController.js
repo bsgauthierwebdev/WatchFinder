@@ -15,35 +15,75 @@ const JWT_SECRET = process.env.JWT_SECRET || 'supersecret'
 const getUserInfo = async (req, res) => {
     try {
         const userId = req.user.user_id
-        // console.log(userId)
 
-        const userResult = await pool.query(
-            `SELECT u.user_id, u.username, u.email, p.*
-             FROM users u 
+        // 1. Get user details & preferences
+        const userData = await pool.query(
+            `SELECT u.user_id, u.username, u.email, u.profile_img_url,
+                p.*
+             FROM users u
              LEFT JOIN preferences p ON u.user_id = p.user_id
              WHERE u.user_id = $1`,
             [userId]
         )
 
-        if (userResult.rows.length === 0) {
+        if (userData.rows.length === 0) {
             return res.status(404).json({error: "User not found"})
         }
 
-        const userData = userResult.rows[0]
+        const user = userData.rows[0]
 
-        const matchesResult = await pool.query(
-            'SELECT * FROM matched_results WHERE user_id = $1',
+        // 2. Get matched results with listing info
+        const matchesData = await pool.query(
+            `SELECT m.*, l.title, l.brand, l.price, l.image_url
+             FROM matched_results m
+             JOIN listings l ON m.listing_id = l.listing_id
+             WHERE m.user_id = $1
+             ORDER BY m.matched_at DESC
+             LIMIT 20`,
             [userId]
         )
 
-        userData.matched_results = matchesResult.rows
+        // 3. Get favorites with listing info
+        const favoritesData = await pool.query(
+            `SELECT f.*, l.title, l.brand, l.price, l.image_url
+             FROM favorites f
+             JOIN listings l ON f.listing_id = l.listing_id
+             WHERE f.user_id = $1`,
+             [userId]
+        )
 
-        // console.log("User data: ", userData)
+        const responseData = {
+            user: {
+                user_id: user.user_id,
+                username: user.username,
+                email: user.email,
+                profile_img: user.profile_img_url
+            },
+            preferences: {
+                preference_id: user.preference_id,
+                platforms: user.platforms,
+                brands: user.brands,
+                case_size_min: user.case_size_min,
+                case_size_max: user.case_size_max,
+                strap_styles: user.strap_styles,
+                movements: user.movements,
+                watch_styles: user.watch_styles,
+                price_min: user.price_min,
+                price_max: user.price_max,
+                seller_location: user.seller_location,
+                condition: user.condition,
+                dial_colors: user.dial_colors,
+                frequency: user.frequency,
+                created_at: user.created_at
+            },
+            matched_results: matchesData.rows,
+            favorites: favoritesData.rows
+        }
 
-        res.json(userData)
-
+        res.json(responseData)
+        
     } catch (err) {
-        console.error("Error fetching user: ", err.message)
+        console.error("Error in /me route: ", err.message)
         res.status(500).json({error: "Server error"})
     }
 }
