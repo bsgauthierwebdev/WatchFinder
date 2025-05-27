@@ -7,7 +7,7 @@ const AuthContext = createContext()
 export const useAuth = () => useContext(AuthContext)
 
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null)
+  const [userData, setUserData] = useState(null)
   const [loading, setLoading] = useState(true)
 
   const fetchUser = async () => {
@@ -23,11 +23,11 @@ const AuthProvider = ({ children }) => {
           Authorization: `Bearer ${token}`
         }
       })
-      setUser(res.data)
+      setUserData(res.data)
     } catch (err) {
       console.error("Error fetching user:", err.message)
       removeToken()
-      setUser(null)
+      setUserData(null)
     } finally {
       setLoading(false)
     }
@@ -50,7 +50,7 @@ const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading }}>
+    <AuthContext.Provider value={{ userData, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   )
