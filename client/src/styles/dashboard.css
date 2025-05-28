@@ -9,6 +9,8 @@
     color: #fff;
 }
 
+
+
 .dashboard-title {
     font-size: 2.5rem;
     color: #fff;
@@ -17,9 +19,7 @@
 }
 
 .dashboard-container p {
-    font-size: 1rem;
-    color: #808080;
-    margin-bottom: 20px;
+    
 }
 
 .dashboard-section {
@@ -41,14 +41,4 @@
 .dashboard-section p {
     font-size: 1rem;
     color: #dcdcdc
-}
-
-.dashboard__profile-img {
-    max-width: 200px;
-    max-height: 200px;
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 2px solid #ccc;
 }

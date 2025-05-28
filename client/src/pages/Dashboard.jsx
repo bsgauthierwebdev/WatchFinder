@@ -15,17 +15,28 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
-      <h1>Welcome, {user?.username}!</h1>
+      <div className="dashboard-header">
+        <div className="dashboard__user-info">
+          <div className="dashboard__username">
+            <h1>Welcome, {user?.username}!</h1>
+          </div>
+          <div className="dashboard__email">
+            <p><strong>Email: </strong>{user.email}</p>
+          </div>
+        </div>
+        <div className="dashboard__user-img">
+          {user.profile_img && (
+            <img 
+              src = {`http://localhost:8800${user.profile_img}`}
+              alt = {user.profile_img} 
+              className = "dashboard__profile-img" 
+            />
+          )}
+        </div>
+      </div>
       
       <div className="dashboard__profile-info">
-        <p><strong>Email: </strong>{user.email}</p>
-        {user.profile_img && (
-          <img 
-            src = {`http://localhost:8800${user.profile_img}`}
-            alt = {user.profile_img} 
-            className = "dashboard__profile-img" 
-          />
-        )}
+        
       </div>
 
       {preferences ? (
