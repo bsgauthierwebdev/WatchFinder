@@ -1,7 +1,8 @@
-import { useAuth } from "../context/AuthContext"
-import DashboardPreferenceCard from '../components/DashboardPreferencesCard';
-import DashboardMatchesCard from "../components/DashboardMatchesCard"
-import "../styles/dashboard.css"
+import { useAuth } from "../../context/AuthContext"
+import DashboardPreferenceCard from '../../components/Dashboard/DashboardPreferences/DashboardPreferencesCard';
+import DashboardMatchesCard from "../../components/Dashboard/DashboardMatches/DashboardMatchesCard"
+import "./dashboard.css"
+import DashboardFavoritesCard from "../../components/Dashboard/DashboardFavorites/DashboardFavoritesCard";
 
 const Dashboard = () => {
   const {userData, loading} = useAuth()
@@ -34,7 +35,24 @@ const Dashboard = () => {
           )}
         </div>
       </div>
-      <div className="dashboard-preferences">
+
+      <div className="dashboard__favorites-section">
+        {favorites && favorites.length > 0 ? (
+          <DashboardFavoritesCard favorites = {favorites} />
+        ) : (
+          <p>You haven't added any listings to your favorites yet</p>
+        )}
+      </div>
+
+      <div className="dashboard__matches-section">
+        {matched_results && matched_results.length > 0 ? (
+          <DashboardMatchesCard matchedResults = {matched_results.slice(0, 20)} />
+        ) : (
+          <p>No matches yet</p>
+        )}
+      </div>
+      
+      <div className="dashboard__preferences-section">
         {preferences ? (
           <DashboardPreferenceCard {...preferences} />
         ) : (
@@ -42,16 +60,9 @@ const Dashboard = () => {
         )}
       </div>
       
-      <div className="dashboard-matches">
-        {matched_results && matched_results.length > 0 ? (
-          <DashboardMatchesCard matchedResults = {matched_results.slice(0, 20)} />
-        ) : (
-          <p>No matches yet</p>
-        )}
-      </div>
-      <div className="dashboard-favorites">
-        <a href = "/favorites">View all of your favorites</a>
-      </div>
+      
+      
+      
     </div>
   )
 }

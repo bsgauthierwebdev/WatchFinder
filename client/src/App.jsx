@@ -1,7 +1,7 @@
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
-import Dashboard from "./pages/Dashboard"
+import Dashboard from "./pages/Dashboard/Dashboard"
 import Landing from "./pages/Landing"
 import Listings from "./pages/Listings"
 import Preferences from "./pages/Preferences"
