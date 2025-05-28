@@ -34,24 +34,22 @@ const Dashboard = () => {
           )}
         </div>
       </div>
-      
-      <div className="dashboard__profile-info">
-        
+      <div className="dashboard-preferences">
+        {preferences ? (
+          <DashboardPreferenceCard {...preferences} />
+        ) : (
+          <p>No preferences saved yet</p>
+        )}
       </div>
-
-      {preferences ? (
-        <DashboardPreferenceCard {...preferences} />
-      ) : (
-        <p>No preferences saved yet</p>
-      )}
-
-      {matched_results && matched_results.length > 0 ? (
-        <DashboardMatchesCard matchedResults = {matched_results.slice(0, 20)} />
-      ) : (
-        <p>No matches yet</p>
-      )}
-
-      <div className="dashboard__favorites-section">
+      
+      <div className="dashboard-matches">
+        {matched_results && matched_results.length > 0 ? (
+          <DashboardMatchesCard matchedResults = {matched_results.slice(0, 20)} />
+        ) : (
+          <p>No matches yet</p>
+        )}
+      </div>
+      <div className="dashboard-favorites">
         <a href = "/favorites">View all of your favorites</a>
       </div>
     </div>

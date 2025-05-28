@@ -9,7 +9,52 @@
     color: #fff;
 }
 
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    padding: 1.5rem 2rem;
+    margin: 2rem auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+    flex-wrap: wrap;
+    gap: 1rem;
+}
 
+.dashboard__user-info {
+    flex: 1;
+    min-width: 250px;
+}
+
+.dashboard__username {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #555;
+}
+
+.dashboard__email {
+    font-size: 1rem;
+    color: #555;
+    justify-content: center;
+    display: flex;
+}
+
+.dashboard__user-img {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dashboard__profile-img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #eee;
+}
 
 .dashboard-title {
     font-size: 2.5rem;
