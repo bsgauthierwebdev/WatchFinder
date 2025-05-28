@@ -1,0 +1,29 @@
+.dashboard-preferences-container {
+    margin-top: 1rem;
+}
+
+.dashboard-preferences-header {
+    display: flex;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    color: #555;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.dashboard-preferences-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 0.5rem;
+}
+
+.dashboard-preferences-grid p {
+    font-size: 1rem;
+    color: #808080;
+    margin-bottom: 20px;
+}
+
+.dashboard-preferences-footer {
+    text-align: right;
+    margin-top: 1rem;
+}
