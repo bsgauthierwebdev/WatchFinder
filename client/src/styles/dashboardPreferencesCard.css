@@ -23,6 +23,12 @@
     gap: 0.5rem;
 }
 
+.dashboard-preferences-grid p {
+    font-size: 1rem;
+    color: #808080;
+    margin-bottom: 20px;
+}
+
 .dashboard-preferences-footer {
     text-align: right;
     margin-top: 1rem;
