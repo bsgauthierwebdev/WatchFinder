@@ -1,70 +1,47 @@
-import { useEffect, useState } from "react"
-import {useNavigate} from "react-router-dom"
-import {getToken} from "../utils/auth"
+import { useAuth } from "../context/AuthContext"
+import DashboardPreferenceCard from '../components/DashboardPreferencesCard';
+import DashboardMatchesCard from "../components/DashboardMatchesCard"
 import "../styles/dashboard.css"
-import DashboardPreferencesCard from "../components/DashboardPreferencesCard"
 
 const Dashboard = () => {
-  const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const navigate = useNavigate()
+  const {userData, loading} = useAuth()
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const token = getToken()
-      if (!token) {
-        navigate("/login")
-        return
-      }
-      
-      try {
-        const res = await fetch("http://localhost:8800/api/users/me", {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        })
+  if (loading) return <p>Loading...</p>
+  if (!userData) return <p>You must be logged in to view the Dashboard</p>
 
-        if (!res.ok) {
-          throw new Error("Unauthorized")
-        }
+  const {user, preferences, matched_results, favorites} = userData
 
-        const data = await res.json()
-        // console.log(data)
-        setUser(data)
-
-      } catch (err) {
-        console.error(err.message)
-        navigate("/login")
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchUser()
-  }, [navigate])
-
-  if (loading) return <p>Loading dashboard...</p>
-  if (!user) return <p>User not found</p>
+  console.log("Image source: ", `http://localhost:8800${user.profile_img}`)
 
   return (
     <div className="dashboard-container">
-      <h1>Welcome, {user.username}!</h1>
-      <div className="dashboard-preferences">
-        <DashboardPreferencesCard 
-          case_size_min={user.case_size_min}
-          case_size_max={user.case_size_max}
-          price_min={user.price_min}
-          price_max={user.price_max}
-          movements={user.movements}
-          strap_styles={user.strap_styles}
-          watch_styles={user.watch_styles}
-          dial_colors={user.dial_colors}
-          condition={user.condition}
-          platforms={user.platforms}
-          brands={user.brands}
-          seller_location={user.seller_location}
-          frequency={user.frequency}
-        />
+      <h1>Welcome, {user?.username}!</h1>
+      
+      <div className="dashboard__profile-info">
+        <p><strong>Email: </strong>{user.email}</p>
+        {user.profile_img && (
+          <img 
+            src = {`http://localhost:8800${user.profile_img}`}
+            alt = {user.profile_img} 
+            className = "dashboard__profile-img" 
+          />
+        )}
+      </div>
+
+      {preferences ? (
+        <DashboardPreferenceCard {...preferences} />
+      ) : (
+        <p>No preferences saved yet</p>
+      )}
+
+      {matched_results && matched_results.length > 0 ? (
+        <DashboardMatchesCard matchedResults = {matched_results.slice(0, 20)} />
+      ) : (
+        <p>No matches yet</p>
+      )}
+
+      <div className="dashboard__favorites-section">
+        <a href = "/favorites">View all of your favorites</a>
       </div>
     </div>
   )
