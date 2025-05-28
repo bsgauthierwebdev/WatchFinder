@@ -9,6 +9,17 @@
   }
 }
 
+@keyframes slideInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(140px)
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0)
+    }
+}
+
 .dashboard-container {
     display: flex;
     flex-direction: column;
@@ -18,6 +29,33 @@
     padding: 2rem;
     background: radial-gradient(#2637ee, #2a1265);
     color: #fff;
+}
+
+.dashboard-container > div {
+    opacity: 0;
+    animation-fill-mode: forwards;
+    animation-duration: 0.6s;
+    animation-timing-function: ease-out;
+}
+
+.dashboard-container > div:nth-child(1) {
+    animation-name: slideInLeft;
+    animation-delay: 0s;
+}
+
+.dashboard-container > div:nth-child(3) {
+    animation-name: slideInLeft;
+    animation-delay: 0.4s;
+}
+
+.dashboard-container > div:nth-child(2) {
+    animation-name: slideInRight;
+    animation-delay: 0.2s;
+}
+
+.dashboard-container > div:nth-child(4) {
+    animation-name: slideInRight;
+    animation-delay: 0.6s;
 }
 
 .dashboard-header {
@@ -32,7 +70,7 @@
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
     flex-wrap: wrap;
     gap: 1rem;
-    animation: slideInLeft 0.6s ease-out;
+    /* animation: slideInLeft 0.6s ease-out; */
 }
 
 .dashboard__user-info {
@@ -68,7 +106,7 @@
     border: 3px solid #eee;
 }
 
-.dashboard__preferences-section {
+.dashboard__favorites-section {
     max-width: 1200px;
     width: 100%;
     padding: 1.5rem 2rem;
@@ -76,6 +114,7 @@
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+    /* animation: slideInRight 1.6s ease-out; */
 }
 
 .dashboard__matches-section {
@@ -86,9 +125,10 @@
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+    /* animation: slideInLeft 2.6s ease-out; */
 }
 
-.dashboard__favorites-section {
+.dashboard__preferences-section {
     max-width: 1200px;
     width: 100%;
     padding: 1.5rem 2rem;
@@ -96,4 +136,5 @@
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+    /* animation: slideInRight 3.6s ease-out; */
 }
