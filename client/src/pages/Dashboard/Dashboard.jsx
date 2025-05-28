@@ -59,10 +59,6 @@ const Dashboard = () => {
           <p>No preferences saved yet</p>
         )}
       </div>
-      
-      
-      
-      
     </div>
   )
 }
