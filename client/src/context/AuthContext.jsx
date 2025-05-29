@@ -46,7 +46,7 @@ const AuthProvider = ({ children }) => {
 
   const logout = () => {
     removeToken()
-    setUser(null)
+    setToken(null)
   }
 
   return (
