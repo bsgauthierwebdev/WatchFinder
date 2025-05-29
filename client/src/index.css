@@ -8,6 +8,5 @@ html, body, #root {
   height: 100%;
   width: 100%;
   font-family: "Segoe UI", 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  /* background-color: #f1f3f5; */
-  background: radial-gradient(ellipse at 75% 25%, #2637ee 0%, #042d7e 62%, #030579);
+  
 }
