@@ -1,3 +1,14 @@
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-700px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 .login-container {
     display: flex;
     flex-direction: column;
@@ -5,7 +16,7 @@
     justify-content: center;
     height: 100vh;
     padding: 2rem;
-    background: radial-gradient(#2637ee, #2a1265);
+    animation: slideDown 0.75s ease-out;
 }
 
 .login-form {
