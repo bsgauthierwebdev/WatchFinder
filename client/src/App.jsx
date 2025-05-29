@@ -7,8 +7,8 @@ import Listings from "./pages/Listings"
 import Preferences from "./pages/Preferences"
 import Favorites from "./pages/Favorites"
 import MatchedResults from "./pages/MatchedResults"
-import Navbar from "./components/Navbar"
-import ProtectedRoute from "./components/ProtectedRoute"
+import Navbar from "./components/Navbar/Navbar"
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute"
 import "./App.css"
 
 const App = () => {
