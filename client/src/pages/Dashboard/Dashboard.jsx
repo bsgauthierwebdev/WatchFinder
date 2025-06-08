@@ -3,6 +3,7 @@ import DashboardPreferenceCard from '../../components/Dashboard/DashboardPrefere
 import DashboardMatchesCard from "../../components/Dashboard/DashboardMatches/DashboardMatchesCard"
 import "./dashboard.css"
 import DashboardFavoritesCard from "../../components/Dashboard/DashboardFavorites/DashboardFavoritesCard";
+import DashboardUserCard from "../../components/Dashboard/DashboardUserCard/DashboardUserCard";
 
 const Dashboard = () => {
   const {userData, loading} = useAuth()
@@ -16,7 +17,7 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
-      <div className="dashboard-header">
+      {/* <div className="dashboard-header">
         <div className="dashboard__user-info">
           <div className="dashboard__username">
             <h1>Welcome, {user?.username}!</h1>
@@ -34,7 +35,9 @@ const Dashboard = () => {
             />
           )}
         </div>
-      </div>
+      </div> */}
+
+      <DashboardUserCard />
 
       <div className="dashboard__favorites-section">
         {favorites && favorites.length > 0 ? (
