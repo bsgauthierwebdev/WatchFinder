@@ -37,8 +37,8 @@ const DashboardMatchesCard = ({matchedResults}) => {
                             //     window.location.href = `/listing/${match.listing_id}`
                             // }}
                         >
-                            {match.image_url && (
-                                <img src = {match.image_url} alt = {match.title} className = "match-card-img" />
+                            {match.images?.length > 0 && (
+                                <img src = {match.images[0]} alt = {match.title} className = "match-card-img" />
                             )}
                             <div className="match-card-info">
                                 <p><strong>Brand: </strong>{match.brand}</p>

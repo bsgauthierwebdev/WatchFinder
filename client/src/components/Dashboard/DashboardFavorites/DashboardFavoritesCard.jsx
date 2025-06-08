@@ -26,11 +26,14 @@ const DashboardFavoritesCard = ({favorites}) => {
         {favorites.map((fav) => (
           <SwiperSlide key = {fav.id}>
             <div className="favorite-card">
-              <img 
-                src = {fav.image_url} 
-                alt = {fav.title}
-                className="favorite-img" 
-              />
+              {fav.images?.length > 0 && (
+                <img 
+                  src = {fav.images[0]} 
+                  alt = {fav.title}
+                  className="favorite-img" 
+                />
+              )}
+              
               <div className="favorite-card-info">
                 <h4>{fav.title}</h4>
                 <p><strong>Brand: </strong>{fav.brand}</p>
