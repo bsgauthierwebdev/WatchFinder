@@ -32,9 +32,20 @@ const getUserInfo = async (req, res) => {
 
         const user = userData.rows[0]
 
-        // 2. Get matched results with listing info
+        // 2. Get all listing images
+        const imagesResult = await pool.query(
+            'SELECT listing_id, image_url FROM listing_images'
+        )
+
+        const imageMap = {}
+        for (const row of imagesResult.rows) {
+            if (!imageMap[row.listing_id]) imageMap[row.listing_id] = []
+            imageMap[row.listing_id].push(row.image_url)
+        }
+
+        // 3. Get matched results with listing info
         const matchesData = await pool.query(
-            `SELECT m.*, l.title, l.brand, l.price, l.image_url
+            `SELECT m.*, l.title, l.brand, l.price, l.listing_id
              FROM matched_results m
              JOIN listings l ON m.listing_id = l.listing_id
              WHERE m.user_id = $1
@@ -43,15 +54,26 @@ const getUserInfo = async (req, res) => {
             [userId]
         )
 
-        // 3. Get favorites with listing info
+        const enrichedMatches = matchesData.rows.map(match => ({
+            ...match,
+            images: imageMap[match.listing_id] || []
+        }))
+
+        // 4. Get favorites with listing info
         const favoritesData = await pool.query(
-            `SELECT f.*, l.title, l.brand, l.price, l.image_url
+            `SELECT f.*, l.title, l.brand, l.price, l.listing_id
              FROM favorites f
              JOIN listings l ON f.listing_id = l.listing_id
              WHERE f.user_id = $1`,
              [userId]
         )
 
+        const enrichedFavorites = favoritesData.rows.map(fav => ({
+            ...fav,
+            images: imageMap[fav.listing_id] || []
+        }))
+
+        // 5. Build response
         const responseData = {
             user: {
                 user_id: user.user_id,
@@ -76,8 +98,8 @@ const getUserInfo = async (req, res) => {
                 frequency: user.frequency,
                 created_at: user.created_at
             },
-            matched_results: matchesData.rows,
-            favorites: favoritesData.rows
+            matched_results: enrichedMatches,
+            favorites: enrichedFavorites
         }
 
         res.json(responseData)
