@@ -39,11 +39,11 @@ CREATE TABLE preferences (
 );
 
 CREATE TABLE listings (
-    listing_id UUID PRIMARY KEY DEFAULY uuid_generate_v4(),
+    listing_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     platform TEXT,
     title TEXT,
     url TEXT UNIQUE,
-    image_url TEXT,
+    -- image_url TEXT,
     price INT,
     brand TEXT,
     case_size INT,
@@ -56,6 +56,12 @@ CREATE TABLE listings (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     scraped_at TIMESTAMP
 );
+
+CREATE TABLE listing_images (
+    image_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    listing_id UUID REFERENCES listings(listing_id) ON DELETE CASCADE,
+    image_url TEXT NOT NULL
+)
 
 CREATE TABLE favorites (
     user_id UUID REFERENCES users (user_id),
