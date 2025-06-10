@@ -1,6 +1,9 @@
 import "./dashboardPreferencesCard.css"
 
 const DashboardPreferenceCard = (props) => {
+    if (!props || Object.keys(props).length === 0) {
+        return <p>No preferences saved yet</p>
+    }
     const {
         case_size_min,
         case_size_max,
@@ -17,6 +20,20 @@ const DashboardPreferenceCard = (props) => {
         frequency
     } = props
 
+    const readCaseSizeMin = case_size_min ?? "Not specified"
+    const readCaseSizeMax = case_size_max ?? "Not specified"
+    const readPriceMin = price_min ?? "Not specified"
+    const readPriceMax = price_max ?? "Not specified"
+    const readMovements = movements ?? []
+    const readStrapStyles = strap_styles ?? []
+    const readWatchStyles = watch_styles ?? []
+    const readPlatforms = platforms ?? []
+    const readBrands = brands ?? []
+    const readDialColors = dial_colors ?? []
+    const readCondition = condition ?? []
+    const readSellerLocation = seller_location ?? []
+    const readFrequency = frequency ?? []
+
     const capitalize = (str) => {
         if (typeof str !== "string" || !str) return ""
         return str.charAt(0).toUpperCase() + str.slice(1)
@@ -29,56 +46,71 @@ const DashboardPreferenceCard = (props) => {
             </div>
 
             <div className="dashboard-preferences-grid">
-                <p><strong>Size: </strong>{case_size_min}mm - {case_size_max}mm</p>
-                <p><strong>Budget: </strong>${price_min} - ${price_max}</p>
+                <p><strong>Size: </strong>
+                    {Number.isFinite(readCaseSizeMin) && Number.isFinite(readCaseSizeMax)
+                        ? `${readCaseSizeMin}mm - ${readCaseSizeMax}mm`
+                        : "Not specified"}
+                </p>
+                <p><strong>Budget: </strong>
+                    {Number.isFinite(readPriceMin) && Number.isFinite(readPriceMax)
+                        ? `$${readPriceMin} - $${readPriceMax}`
+                        : "Not specified"}
+                </p>
                 <p><strong>Movement: </strong>
-                    {movements.map((m, i) => (
-                        <span key = {i}>
-                            {capitalize(m)}{i < movements.length - 1 ? ", " : ""}
-                        </span>
-                    ))}
+                    {readMovements.length > 0
+                        ? readMovements.map((m, i) => (
+                            <span key = {i}>
+                                {capitalize(m)}{i < readMovements.length - 1 ? ", " : ""}
+                            </span>
+                        )) : "Not specified"}
                 </p>
                 <p><strong>Strap Style: </strong>
-                    {strap_styles.map((s, i) => (
-                        <span key = {i}>
-                            {capitalize(s)}{i < strap_styles.length - 1 ? ", " : ""}
-                        </span>
-                    ))}
+                    {readStrapStyles.length > 0
+                        ? readStrapStyles.map((m, i) => (
+                            <span key = {i}>
+                                {capitalize(m)}{i < readStrapStyles.length - 1 ? ", " : ""}
+                            </span>
+                        )) : "Not specified"}
                 </p>
                 <p><strong>Watch Style: </strong>
-                    {watch_styles.map((w, i) => (
-                        <span key = {i}>
-                            {capitalize(w)}{i < watch_styles.length - 1 ? ", " : ""}
-                        </span>
-                    ))}
+                    {readWatchStyles.length > 0
+                        ? readWatchStyles.map((m, i) => (
+                            <span key = {i}>
+                                {capitalize(m)}{i < readWatchStyles.length - 1 ? ", " : ""}
+                            </span>
+                        )) : "Not specified"}
                 </p>
                 <p><strong>Dial Colors: </strong>
-                    {dial_colors.map((d, i) => (
-                        <span key = {i}>
-                            {capitalize(d)}{i < dial_colors.length - 1 ? ", " : ""}
-                        </span>
-                    ))}
+                    {readDialColors.length > 0
+                        ? readMovements.map((m, i) => (
+                            <span key = {i}>
+                                {capitalize(m)}{i < readMovements.length - 1 ? ", " : ""}
+                            </span>
+                        )) : "Not specified"}
                 </p>
                 <p><strong>Condition: </strong>
-                    {condition.map((c, i) => (
-                        <span key = {i}>
-                            {capitalize(c)}{i < condition.length - 1 ? ", " : ""}
-                        </span>
-                    ))}
+                    {readCondition.length > 0
+                        ? readCondition.map((m, i) => (
+                            <span key = {i}>
+                                {capitalize(m)}{i < readCondition.length - 1 ? ", " : ""}
+                            </span>
+                        )) : "Not specified"}
                 </p>
                 <p><strong>Platforms: </strong>
-                    {platforms?.map((p, i) => (
-                        <span key = {i}>
-                            {capitalize(p)}{i < platforms.length - 1 ? ", " : ""}
-                        </span>
-                    ))}
+                    {readPlatforms.length > 0
+                        ? readPlatforms.map((m, i) => (
+                            <span key = {i}>
+                                {capitalize(m)}{i < readPlatforms.length - 1 ? ", " : ""}
+                            </span>
+                        )) : "Not specified"}
                 </p>
                 <p><strong>Brands: </strong>
-                    {brands?.map((b, i) => (
-                        <span key = {i}>
-                            {capitalize(b)}{i < brands.length - 1 ? ", " : ""}
-                        </span>
-                    ))}
+                    {readBrands.length > 0
+                        ? readBrands.map((m, i) => (
+                            <span key = {i}>
+                                {capitalize(m)}{i < readBrands.length - 1 ? ", " : ""}
+                            </span>
+                        )) : "Not specified"}
                 </p>
                 <p><strong>Seller Location: </strong>{capitalize(seller_location) || "Not specified"}</p>
                 <p><strong>Alert Frequency: </strong>{capitalize(frequency) || "Not specified"}</p>
