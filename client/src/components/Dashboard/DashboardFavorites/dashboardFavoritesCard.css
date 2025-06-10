@@ -54,6 +54,12 @@
     margin: 0.5rem 0;
 }
 
+.no-favorites-message {
+    font-size: 14px;
+    color: #333;
+    font-style: italic;
+}
+
 .dashboard-favorites-footer {
     text-align: right;
     margin-top: 1rem;
