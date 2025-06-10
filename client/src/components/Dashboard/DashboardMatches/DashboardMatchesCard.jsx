@@ -8,7 +8,7 @@ import "./dashboardMatchesCard.css"
 const DashboardMatchesCard = ({matchedResults}) => {
     const hasMatches = Array.isArray(matchedResults) && matchedResults.length > 0
 
-    console.log("Has matches? ", hasMatches)
+    // console.log("Has matches? ", hasMatches)
 
     return (
         <div className="dashboard-matches-container">
