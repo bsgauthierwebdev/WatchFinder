@@ -6,10 +6,9 @@ import "swiper/css/pagination"
 import "./dashboardMatchesCard.css"
 
 const DashboardMatchesCard = ({matchedResults}) => {
-    if (!matchedResults || matchedResults.length === 0) {
-        return <p>No matched results yet</p>
-    }
-    // console.log("Matched Results Count: ", matchedResults.length)
+    const hasMatches = Array.isArray(matchedResults) && matchedResults.length > 0
+
+    console.log("Has matches? ", hasMatches)
 
     return (
         <div className="dashboard-matches-container">
@@ -17,38 +16,45 @@ const DashboardMatchesCard = ({matchedResults}) => {
                 <h3>Your Matched Listings</h3>
             </div>
 
-            <Swiper
-                modules = {[Navigation, Pagination]}
-                spaceBetween={20}
-                slidesPerView={3}
-                navigation
-                pagination = {{clickable: true}}
-                breakpoints = {{
-                    640: {slidesPerView: 1},
-                    768: {slidesPerView: 2},
-                    1024: {slidesPerView: 3}
-                }}
-            >
-                {matchedResults.map(match => (
-                    <SwiperSlide key = {match.match_id}>
-                        <div 
-                            className="match-card"
-                            // onClick = {() => {
-                            //     window.location.href = `/listing/${match.listing_id}`
-                            // }}
-                        >
-                            {match.images?.length > 0 && (
-                                <img src = {match.images[0]} alt = {match.title} className = "match-card-img" />
-                            )}
-                            <div className="match-card-info">
-                                <p><strong>Brand: </strong>{match.brand}</p>
-                                <p><strong>Price: </strong>{match.price}</p>
-                                <p>{match.title}</p>
+            {hasMatches ? (
+                <Swiper
+                    modules = {[Navigation, Pagination]}
+                    spaceBetween={20}
+                    slidesPerView={3}
+                    navigation
+                    pagination = {{clickable: true}}
+                    breakpoints = {{
+                        640: {slidesPerView: 1},
+                        768: {slidesPerView: 2},
+                        1024: {slidesPerView: 3}
+                    }}
+                >
+                    {matchedResults.map(match => (
+                        <SwiperSlide key = {match.match_id}>
+                            <div 
+                                className="match-card"
+                                // onClick = {() => {
+                                //     window.location.href = `/listing/${match.listing_id}`
+                                // }}
+                            >
+                                {match.images?.length > 0 && (
+                                    <img src = {match.images[0]} alt = {match.title} className = "match-card-img" />
+                                )}
+                                <div className="match-card-info">
+                                    <p><strong>Brand: </strong>{match.brand}</p>
+                                    <p><strong>Price: </strong>{match.price}</p>
+                                    <p>{match.title}</p>
+                                </div>
                             </div>
-                        </div>
-                    </SwiperSlide>
-                ))}
-            </Swiper>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            ) : (
+                <div className="no-matches-message">
+                    <p>No matched results yet</p>
+                </div>
+            )}
+            
             <div className="dashboard-matches-footer">
                 <a href = "/matches" className = "view-all-link">View All Matches</a>
             </div>
