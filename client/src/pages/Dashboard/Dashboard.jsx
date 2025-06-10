@@ -17,50 +17,20 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
-      {/* <div className="dashboard-header">
-        <div className="dashboard__user-info">
-          <div className="dashboard__username">
-            <h1>Welcome, {user?.username}!</h1>
-          </div>
-          <div className="dashboard__email">
-            <p><strong>Email: </strong>{user.email}</p>
-          </div>
-        </div>
-        <div className="dashboard__user-img">
-          {user.profile_img && (
-            <img 
-              src = {`http://localhost:8800${user.profile_img}`}
-              alt = {user.profile_img} 
-              className = "dashboard__profile-img" 
-            />
-          )}
-        </div>
-      </div> */}
-
-      <DashboardUserCard />
+      <div className="dashboard__user-section">
+        <DashboardUserCard />
+      </div>
 
       <div className="dashboard__favorites-section">
-        {favorites && favorites.length > 0 ? (
-          <DashboardFavoritesCard favorites = {favorites} />
-        ) : (
-          <p>You haven't added any listings to your favorites yet</p>
-        )}
+        <DashboardFavoritesCard favorites = {favorites ?? []} />
       </div>
 
       <div className="dashboard__matches-section">
-        {matched_results && matched_results.length > 0 ? (
-          <DashboardMatchesCard matchedResults = {matched_results.slice(0, 20)} />
-        ) : (
-          <p>No matches yet</p>
-        )}
+        <DashboardMatchesCard matchedResults = {matched_results ?? []} />
       </div>
       
       <div className="dashboard__preferences-section">
-        {preferences ? (
-          <DashboardPreferenceCard {...preferences} />
-        ) : (
-          <p>No preferences saved yet</p>
-        )}
+        <DashboardPreferenceCard {...preferences} />
       </div>
     </div>
   )
