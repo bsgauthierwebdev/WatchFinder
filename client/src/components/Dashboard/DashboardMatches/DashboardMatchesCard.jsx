@@ -55,9 +55,14 @@ const DashboardMatchesCard = ({matchedResults}) => {
                 </div>
             )}
             
-            <div className="dashboard-matches-footer">
-                <a href = "/matches" className = "view-all-link">View All Matches</a>
-            </div>
+            {hasMatches ? (
+                <div className="dashboard-matches-footer">
+                    <a href = "/matches" className = "view-all-link">View All Matches</a>
+                </div>
+            ) : (
+                null
+            )}
+            
         </div>
     )
 }
