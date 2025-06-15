@@ -15,7 +15,11 @@ const registerUser = async (req, res) => {
         return res.status(400).json({errors: errors.array()})
     }
 
-    const {username, email, password} = req.body
+    const {username, email, password, confirmPassword} = req.body
+
+    if (password !== confirmPassword) {
+        return res.status(400).json({error: "Passwords do not match"})
+    }
 
     try {
         const usernameInUse = await pool.query(
@@ -51,7 +55,16 @@ const registerUser = async (req, res) => {
             [username, email, hashed]
         )
 
-        return res.status(201).json(newUser.rows[0])
+        const token = jwt.sign(
+            {user_id: newUser.rows[0].user_id},
+            process.env.JWT_SECRET,
+            {expiresIn: "1d"}
+        )
+
+        return res.status(201).json({
+            token,
+            user: newUser.rows[0]
+        })
 
     } catch (err) {
         console.error(err)
