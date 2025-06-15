@@ -80,3 +80,17 @@
     margin-bottom: 0.5rem;
     text-align: center;
 }
+
+.login-redirect {
+    color: white;
+    margin-top: 10px;
+}
+
+.login-redirect-link {
+    color: #0077ff;
+    transition: color 0.2s ease-in-out
+}
+
+.login-redirect-link:hover {
+    color: #005ec2;
+}

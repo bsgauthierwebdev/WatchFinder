@@ -1,5 +1,5 @@
 import { useState } from "react"
-import {useNavigate} from "react-router-dom"
+import {useNavigate, Link} from "react-router-dom"
 import { useAuth } from "../../context/AuthContext"
 import "./register.css"
 
@@ -80,6 +80,9 @@ const Register = () => {
           <button className="register-btn">Register</button>
         </div>
       </form>
+      <div className="register-redirect">
+        <p>Already have an account? <Link to = "/login" className = "register-redirect-link">Register your account</Link></p>
+      </div>
     </div>
   )
 }

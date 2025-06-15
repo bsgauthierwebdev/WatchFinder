@@ -11,6 +11,7 @@
 
 .register-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
@@ -76,4 +77,18 @@
 
 .register-submit .register-btn:hover {
     background-color: #5a67d8;
+}
+
+.register-redirect {
+    color: white;
+    margin-top: 10px;
+}
+
+.register-redirect-link {
+    color: #0077ff;
+    transition: color 0.2s ease-in-out
+}
+
+.register-redirect-link:hover {
+    color: #005ec2;
 }

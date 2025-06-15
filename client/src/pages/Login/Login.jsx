@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../../context/AuthContext"
 import "./login.css"
 
@@ -50,6 +50,9 @@ const Login = () => {
 
         <button type = "submit" className = "login-btn">Log In</button>
       </form>
+      <div className="login-redirect">
+        <p>Don't have an account yet? <Link to = "/register" className = "login-redirect-link">Register your account</Link></p>
+      </div>
     </div>
   )
 }
