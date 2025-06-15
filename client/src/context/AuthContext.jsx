@@ -52,9 +52,10 @@ const AuthProvider = ({ children }) => {
     await fetchUser()
   }
 
-  const logout = () => {
+  const logout = async () => {
     removeToken()
     setToken(null)
+    await fetchUser()
   }
 
   return (
