@@ -37,6 +37,14 @@ const AuthProvider = ({ children }) => {
     fetchUser()
   }, [])
 
+  const register = async (userData) => {
+    const res = await axios.post("/api/auth/register", userData)
+    const {token} = res.data
+
+    setToken(token)
+    await fetchUser()
+  }
+
   const login = async (email, password) => {
     const res = await axios.post("/api/auth/login", { email, password })
     const token = res.data.token
@@ -50,7 +58,7 @@ const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ userData, login, logout, loading }}>
+    <AuthContext.Provider value={{ userData, register, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   )
