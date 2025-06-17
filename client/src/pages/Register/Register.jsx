@@ -81,7 +81,7 @@ const Register = () => {
         </div>
       </form>
       <div className="register-redirect">
-        <p>Already have an account? <Link to = "/login" className = "register-redirect-link">Register your account</Link></p>
+        <p>Already have an account? <Link to = "/login" className = "register-redirect-link">Log in</Link></p>
       </div>
     </div>
   )
