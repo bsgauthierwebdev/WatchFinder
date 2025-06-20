@@ -90,6 +90,12 @@
     background-color: #5a67d8;
 }
 
+.forgot-password-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .login-redirect {
     color: white;
     margin-top: 10px;

@@ -10,6 +10,8 @@ import MatchedResults from "./pages/MatchedResults"
 import Navbar from "./components/Navbar/Navbar"
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute"
 import backgroundImg from "./assets/background.png"
+import ForgotPassword from "./pages/ForgotPassword/ForgotPassword"
+import ResetPassword from "./pages/ResetPassword/ResetPassword"
 import "./App.css"
 
 const App = () => {
@@ -38,6 +40,8 @@ const App = () => {
           <Route path = "/preferences" element = {<Preferences />} />
           <Route path = "/favorites" element = {<Favorites />} />
           <Route path = "/matches" element = {<MatchedResults />} />
+          <Route path = "/forgot-password" element = {<ForgotPassword />} />
+          <Route path = "/reset-password/:token" element = {<ResetPassword />} />
         </Routes>
       </Router>
     </div>
