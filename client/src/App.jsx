@@ -12,6 +12,7 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute"
 import backgroundImg from "./assets/background.png"
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword"
 import ResetPassword from "./pages/ResetPassword/ResetPassword"
+import Profile from "./pages/Profile/Profile"
 import "./App.css"
 
 const App = () => {
@@ -32,6 +33,14 @@ const App = () => {
             element = {
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route 
+            path = "/profile"
+            element = {
+              <ProtectedRoute>
+                <Profile />
               </ProtectedRoute>
             }
           />
