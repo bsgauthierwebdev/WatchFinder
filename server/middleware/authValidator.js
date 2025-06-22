@@ -45,10 +45,18 @@ const updateEmailValidation = [
 
 const updatePasswordValidation = [
     body("currentPassword")
-        .notEmpty().withMessage("Password is required"),
+        .notEmpty()
+        .withMessage("Current password is required"),
     body("newPassword")
-        .notEmpty().withMessage("Password is required")
-        .isLength({min: 8}).withMessage("Password must be at least 8 characters in length")
+        .notEmpty()
+        .withMessage("New password is required")
+        .isLength({min: 8})
+        .withMessage("Password must be at least 8 characters in length"),
+    body("confirmPassword")
+        .notEmpty()
+        .withMessage("Confirm password is required")
+        .custom((value, {req}) => value === req.body.newPassword)
+        .withMessage("Passwords do not match")
 ]
 
 const forgotPasswordValidation = [
