@@ -57,8 +57,21 @@ const AuthProvider = ({ children }) => {
     setUserData(null)
   }
 
+  const refreshUserData = async () => {
+    try {
+      const res = await axios.get("/api/users/me", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      })
+      setUserData(res.data)
+    } catch (err) {
+      console.error("Failed to refresh user data: ", err.message)
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ userData, register, login, logout, loading }}>
+    <AuthContext.Provider value={{ userData, register, login, logout, refreshUserData, loading }}>
       {children}
     </AuthContext.Provider>
   )
