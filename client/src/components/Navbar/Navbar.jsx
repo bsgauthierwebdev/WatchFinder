@@ -26,9 +26,11 @@ const Navbar = () => {
                             <span className = "userinfo__greeting">Welcome, {user.username}</span>
                         </div>
                         <div className="navbar__nav-links">
+                            <Link to = "/dashboard">Dashboard</Link>
                             <Link to = "/favorites">Favorites</Link>
                             <Link to = "/matched-listings">Matches</Link>
                             <Link to = "/preferences">Preferences</Link>
+                            <Link to = "/profile">Profile</Link>
                             <button className = "navbar-logoutbtn" onClick = {handleLogout}>Logout</button>
                         </div>
                     </>
