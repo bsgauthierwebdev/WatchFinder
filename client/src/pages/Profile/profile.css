@@ -1,0 +1,114 @@
+.profile-container {
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 8px;
+    margin-top: 25px;
+}
+
+.profile-form__title {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.profile-actions {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.action-button {
+    flex: 1 1 20%;
+    padding: 0.75rem 1rem;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.action-button:hover {
+    background-color: #0056b3;
+}
+
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.profile-form inpit[type = "text"],
+.profile-form inpit[type = "email"],
+.profile-form inpit[type = "password"],
+.profile-form inpit[type = "file"] {
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.update-btn {
+    padding: 0.75rem 1.5rem;
+    margin: 0 auto;
+    background-color: #007bff;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.update-btn:hover {
+    background-color: #0056b3;
+}
+
+.cancel-btn {
+    padding: 0.75rem 1.5rem;
+    margin: 0 auto;
+    background-color: #e42b2b;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.cancel-btn:hover {
+    background-color: #950e0e;
+}
+
+.profile-preview {
+    /* max-width: 150px; */
+    height: 150px;
+    width: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-top: 1rem;
+    margin: 0 auto;
+}
+
+.profile-messages {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.error-message {
+    color: red;
+}
+
+.success-message {
+    color: green;
+}
