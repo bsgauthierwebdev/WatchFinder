@@ -16,7 +16,10 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     reset_token TEXT,
     reset_token_expires TIMESTAMP,
-    profile_img_url VARCHAR(255)
+    profile_img_url VARCHAR(255),
+    is_verified BOOLEAN DEFAULT FALSE,
+    email_verification_token TEXT,
+    email_verification_expires TIMESTAMP
 );
 
 CREATE TABLE preferences (
