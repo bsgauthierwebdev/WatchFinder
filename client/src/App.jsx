@@ -13,6 +13,7 @@ import backgroundImg from "./assets/background.png"
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword"
 import ResetPassword from "./pages/ResetPassword/ResetPassword"
 import Profile from "./pages/Profile/Profile"
+import VerifyEmail from "./pages/VerifyEmail/VerifyEmail"
 import "./App.css"
 
 const App = () => {
@@ -45,6 +46,7 @@ const App = () => {
             }
           />
           <Route path = "/register" element = {<Register />} />
+          <Route path = "/verify-email/:token" element = {<VerifyEmail />} />
           <Route path = "/listings" element = {<Listings />} />
           <Route path = "/preferences" element = {<Preferences />} />
           <Route path = "/favorites" element = {<Favorites />} />
