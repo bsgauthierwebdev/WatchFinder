@@ -140,7 +140,10 @@ const Profile = () => {
 
         try {
             await axios.put("/api/users/update-profile-pic", formData, {
-                headers: {"Content-Type": "multipart/form-data"}
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
             })
             setSuccess("Profile picture updated")
             refreshUserData()
