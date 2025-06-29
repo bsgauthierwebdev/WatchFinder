@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import "./profile.css"
 
+const DEFAULT_IMG_URL = "http://localhost:8800/uploads/default-profile-img.jpg"
+
 const Profile = () => {
     const {userData, refreshUserData} = useAuth()
     const fileInputRef = useRef(null)
@@ -15,7 +17,11 @@ const Profile = () => {
     const [newPassword, setNewPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
     const [profileImg, setProfileImg] = useState(null)
-    const [preview, setPreview] = useState(user?.profile_img ? `http://localhost:8800${user.profile_img}` : null)
+    const [preview, setPreview] = useState(
+        user?.profile_img 
+            ? `http://localhost:8800${user.profile_img}` 
+            : DEFAULT_IMG_URL
+    )
 
     const [error, setError] = useState("")
     const [success, setSuccess] = useState("")
@@ -126,6 +132,19 @@ const Profile = () => {
         }
     }
 
+    const handleImageChange = (e) => {
+    const file = e.target.files[0]; 
+        if (file) {
+            setProfileImg(file);
+            setPreview(URL.createObjectURL(file));
+        } 
+        
+        else {
+            setProfileImg(null);
+            setPreview(user?.profile_img ? `http://localhost:8800${user.profile_img}` : DEFAULT_IMG_URL);
+        }
+    };
+
     const handleChangeProfileImg = async (e) => {
         e.preventDefault()
         clearMessages()
@@ -139,13 +158,15 @@ const Profile = () => {
         formData.append("profile_img", profileImg)
 
         try {
-            await axios.put("/api/users/update-profile-pic", formData, {
+            const res = await axios.put("/api/users/update-profile-pic", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     Authorization: `Bearer ${localStorage.getItem("token")}`
                 }
             })
+
             setSuccess("Profile picture updated")
+            setPreview(`http://localhost:8800${res.data.newImageUrl}`)
             refreshUserData()
         } catch (err) {
             setError(err.response?.data?.error || "Profile image update failed")
@@ -156,16 +177,22 @@ const Profile = () => {
         }
     }
 
-    const handleImageChange = (e) => {
-    const file = e.target.files[0]; 
-        if (file) {
-            setProfileImg(file);
-            setPreview(URL.createObjectURL(file));
-        } else {
-            setProfileImg(null);
-            setPreview(user?.profile_img ? `http://localhost:8800${user.profile_img}` : null);
+    const handleDeleteProfileImg = async () => {
+        clearMessages()
+
+        try {
+            const res = await axios.delete("/api/users/delete-profile-pic", {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            })
+            setSuccess("Profile image reset to default")
+            setPreview(DEFAULT_IMG_URL)
+            refreshUserData()
+        } catch (err) {
+            setError(err.response?.data?.error || "Failed to reset profile image")
         }
-    };
+    }
 
     const handleCancel = () => {
         setActiveSection("")
@@ -269,8 +296,15 @@ const Profile = () => {
                             className = "profile-preview"
                         />
                     )}
-                    <button className = "update-btn" type = "submit">Update Profile Picture</button>
-                    <button className="cancel-btn" type = "button" onClick = {handleCancel}>Cancel</button>
+                    <div className="image-buttons">
+                        <button className = "update-btn" type = "submit">Update Profile Picture</button>
+                        {user?.profile_img_url !== "/uploads/default-profile-img.jpg" && (
+                            <button className = "remove-btn" type = "button" onClick={handleDeleteProfileImg}>
+                                Remove Image
+                            </button>
+                        )}
+                        <button className="cancel-btn" type = "button" onClick = {handleCancel}>Cancel</button>
+                    </div>
                 </form>
             )}
 
