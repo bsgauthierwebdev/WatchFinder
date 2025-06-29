@@ -2,7 +2,9 @@ const pool = require('../db')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const dotenv = require("dotenv")
+const crypto = require("crypto")
 const {validationResult} = require("express-validator")
+const sendEmail = require("../utils/sendEmail")
 dotenv.config()
 
 
@@ -31,11 +33,6 @@ const registerUser = async (req, res) => {
             return res.status(409).json({error: "Username already in use"})
         }
 
-        // const emailCheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-        // if (!emailCheck.test(email)) {
-        //     return res.status(400).json({error: "Invalid email format"})
-        // }
-
         const emailInUse = await pool.query(
             'SELECT * FROM users WHERE email = $1',
             [email]
@@ -45,30 +42,89 @@ const registerUser = async (req, res) => {
             return res.status(409).json({error: "Email already in use"})
         }
 
-        // if (password.length < 8) {
-        //     return res.status(400).json({error: "Password must be at least 8 characters"})
-        // }
-
         const hashed = await bcrypt.hash(password, 10)
-        const newUser = await pool.query(
-            'INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING user_id, username, email',
-            [username, email, hashed]
+
+        const verificationToken = crypto.randomBytes(32).toString("hex")
+        const verificationExpires = new Date(Date.now() + 1000 * 60 * 60)
+
+        const newUser = await pool.query(`
+                INSERT INTO users (username, email, password, is_verified, email_verification_token, email_verification_expires) 
+                VALUES ($1, $2, $3, $4, $5, $6) 
+                RETURNING user_id, username, email
+            `,
+            [username, email, hashed, false, verificationToken, verificationExpires]
         )
 
-        const token = jwt.sign(
-            {user_id: newUser.rows[0].user_id},
-            process.env.JWT_SECRET,
-            {expiresIn: "1d"}
+        const verifyLink = `http://localhost:5173/verify-email/${verificationToken}`
+        await sendEmail(
+            email,
+            "Verify your email address",
+            `
+                <h2>Welcome to Watch Finder!</h2>
+                <p>Please verify your email address by clicking the button below:</p>
+                <a href = "${verifyLink}" style = "padding: 10px 15px; background-color: #1a73e8; color: white; text-decoration: none; border-radius: 5px;">Verify email</a>
+                <p>This link will expire in 1 hour</p>
+            `
         )
 
-        return res.status(201).json({
-            token,
-            user: newUser.rows[0]
-        })
+        // const token = jwt.sign(
+        //     {user_id: newUser.rows[0].user_id},
+        //     process.env.JWT_SECRET,
+        //     {expiresIn: "1d"}
+        // )
+
+        // return res.status(201).json({
+        //     token,
+        //     user: newUser.rows[0]
+        // })
+
+        return res.status(201).json({message: "Registration successful! Please check your email to verify your account."})
 
     } catch (err) {
-        console.error(err)
+        console.error("Registration failed: ", err.message)
         res.status(500).json({error: "User registration failed"})
+    }
+}
+
+// PUT: Verify new user
+const verifyEmail = async (req, res) => {
+    const {token} = req.params
+
+    if (!token) {
+        return res.status(400).json({error: "Verification token missing"})
+    }
+
+    try {
+        const result = await pool.query(
+            'SELECT * FROM users WHERE email_verification_token = $1',
+            [token]
+        )
+
+        const user = result.rows[0]
+
+        if (!user) {
+            return res.status(400).json({error: "Invalid or expired verification token"})
+        }
+
+        if (user.is_verified) {
+            return res.status(400).json({error: "Email already verified"})
+        }
+
+        const expires = new Date(user.email_verification_expires)
+        if (Date.now() > expires.getTime()) {
+            return res.status(400).json({error: "Verification token has expired"})
+        }
+
+        await pool.query(
+            'UPDATE users SET is_verified = true, email_verification_token = NULL, email_verification_expires = NULL WHERE user_id = $1',
+            [user.user_id]
+        )
+
+        res.status(200).json({message: "Email verified successfully!"})
+
+    } catch (err) {
+        console.error("Email verification failed: ", err.message)
+        res.status(500).json({error: "Email verification failed"})
     }
 }
 
@@ -111,4 +167,4 @@ const loginUser = async (req, res) => {
     }
 }
 
-module.exports = {registerUser, loginUser}
+module.exports = {registerUser, verifyEmail, loginUser}
