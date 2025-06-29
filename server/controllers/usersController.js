@@ -9,6 +9,7 @@ const path = require("path")
 const {validationResult} = require("express-validator")
 dotenv.config()
 
+const DEFAULT_IMG_FILENAME = "default-profile-img.jpg"
 
 const JWT_SECRET = process.env.JWT_SECRET || 'supersecret' 
 
@@ -299,14 +300,7 @@ const updatePassword = async (req, res) => {
 const updateProfilePic = async (req, res) => {
     try {
         // 1. Authorization
-        const authHeader = req.header("Authorization")
-        if (!authHeader || !authHeader.startsWith("Bearer ")) {
-            return res.status(401).json({error: "Unauthorized"})
-        }
-
-        const token = authHeader.replace("Bearer ", "").trim()
-        const data = jwt.verify(token, JWT_SECRET)
-        const userId = data.user_id
+        const userId = req.user.user_id
 
         // 2. File Check
         if (!req.file) {
@@ -324,7 +318,7 @@ const updateProfilePic = async (req, res) => {
         if (
             currentImgUrl &&
             typeof currentImgUrl === "string" &&
-            !currentImgUrl.includes("default") &&
+            !currentImgUrl.includes(DEFAULT_IMG_FILENAME) &&
             currentImgUrl.includes("/uploads/")
         ) {
             const filename = currentImgUrl.split("/uploads/").pop()
@@ -355,6 +349,46 @@ const updateProfilePic = async (req, res) => {
     } catch (err) {
         console.error("Error updating profile image: ", err.message)
         res.status(500).json({error: "Could not update user image"})
+    }
+}
+
+// DELETE: Delete profile pic
+const deleteProfilePic = async (req, res) => {
+    try {
+        const userId = req.user.user_id
+
+        const result = await pool.query(
+            'SELECT profile_img_url FROM users WHERE user_id = $1',
+            [userId]
+        )
+
+        const currentImgUrl = result.rows[0]?.profile_img_url
+        const defaultImg = "/uploads/default-profile-img.jpg"
+
+        // Only delete if current image is not the default
+        if (currentImgUrl && currentImgUrl !== defaultImg) {
+            const filename = currentImgUrl.split("/uploads/").pop()
+            const fullPath = path.join(__dirname, "..", "uploads", filename)
+
+            fs.unlink(fullPath, (err) => {
+                if (err) {
+                    console.error("Failed to delete image: ", err.message)
+                } else {
+                    console.log("Old profile image deleted: ", fullPath)
+                }
+            })
+
+            await pool.query(
+                'UPDATE users SET profile_img_url = $1 WHERE user_id = $2',
+                [defaultImg, userId]
+            )
+
+            return res.status(200).json({message: "Profile image reset to default", imageUrl: defaultImg})
+        }
+
+    } catch (err) {
+        console.error("Error resetting profile image: ", err.message)
+        res.status(500).json({error: "Failed to reset profile image"})
     }
 }
 
@@ -456,4 +490,4 @@ const deleteAccount = async (req, res) => {
     }
 }
 
-module.exports = {getUserInfo, authorizeUser, logout, updateUsername, updateEmail, updatePassword, updateProfilePic, forgotPassword, resetPassword, deleteAccount}
+module.exports = {getUserInfo, authorizeUser, logout, updateUsername, updateEmail, updatePassword, updateProfilePic, deleteProfilePic, forgotPassword, resetPassword, deleteAccount}
