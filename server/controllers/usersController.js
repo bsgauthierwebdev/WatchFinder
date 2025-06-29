@@ -330,7 +330,7 @@ const updateProfilePic = async (req, res) => {
             const filename = currentImgUrl.split("/uploads/").pop()
             const fullPath = path.join(__dirname, "..", "uploads", filename)
 
-            console.log("Deleting old image: ", fullPath)
+            // console.log("Deleting old image: ", fullPath)
 
             // Delete asychronously
             fs.unlink(fullPath, (err) => {
