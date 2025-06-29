@@ -105,10 +105,13 @@ const verifyEmail = async (req, res) => {
         if (!user) {
             return res.status(400).json({error: "Invalid or expired verification token"})
         }
+        
+        // console.log("Registering user ", user.username)
 
         if (user.is_verified) {
             return res.status(400).json({error: "Email already verified"})
         }
+
 
         const expires = new Date(user.email_verification_expires)
         if (Date.now() > expires.getTime()) {
