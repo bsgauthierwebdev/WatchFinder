@@ -1,0 +1,17 @@
+.verify-email-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+    overflow: visible;
+    background-color: #fff;
+    border-radius: 6px;
+    padding: 1rem;
+}
+
+.verify-message {
+    color: #333;
+    padding: 20px 40px;
+}
