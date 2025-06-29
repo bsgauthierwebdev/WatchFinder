@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 const sendEmail = require("../utils/sendEmail")
 const crypto = require("crypto")
 const dotenv = require("dotenv")
+const fs = require("fs")
 const path = require("path")
 const {validationResult} = require("express-validator")
 dotenv.config()
@@ -297,6 +298,7 @@ const updatePassword = async (req, res) => {
 // PUT: Update profile pic
 const updateProfilePic = async (req, res) => {
     try {
+        // 1. Authorization
         const authHeader = req.header("Authorization")
         if (!authHeader || !authHeader.startsWith("Bearer ")) {
             return res.status(401).json({error: "Unauthorized"})
@@ -306,18 +308,50 @@ const updateProfilePic = async (req, res) => {
         const data = jwt.verify(token, JWT_SECRET)
         const userId = data.user_id
 
+        // 2. File Check
         if (!req.file) {
             return res.status(400).json({error: "No image uploaded"})
         }
 
-        const imageUrl = path.posix.join("/uploads", req.file.filename) // Stored path
+        // 3. Get Current Image
+        const result = await pool.query(
+            'SELECT profile_img_url FROM users WHERE user_id = $1',
+            [userId]
+        )
+        const currentImgUrl = result.rows[0]?.profile_img_url
+
+        // 4. Delete Previous Image
+        if (
+            currentImgUrl &&
+            typeof currentImgUrl === "string" &&
+            !currentImgUrl.includes("default") &&
+            currentImgUrl.includes("/uploads/")
+        ) {
+            const filename = currentImgUrl.split("/uploads/").pop()
+            const fullPath = path.join(__dirname, "..", "uploads", filename)
+
+            console.log("Deleting old image: ", fullPath)
+
+            // Delete asychronously
+            fs.unlink(fullPath, (err) => {
+                if (err) {
+                    console.error("Failed to delete old image: ", err.message)
+                } else {
+                    console.log("Old image deleted: ", fullPath)
+                }
+            })
+        }
+
+        // 5. Save New Image
+        const newImageUrl = path.posix.join("/uploads", req.file.filename) // Stored path
 
         await pool.query(
             'UPDATE users SET profile_img_url = $1 WHERE user_id = $2',
-            [imageUrl, userId]
+            [newImageUrl, userId]
         )
 
-        res.status(200).json({message: "Profile picture updated", imageUrl})
+        // 6. Success response
+        res.status(200).json({message: "Profile picture updated", newImageUrl})
     } catch (err) {
         console.error("Error updating profile image: ", err.message)
         res.status(500).json({error: "Could not update user image"})
