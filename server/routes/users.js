@@ -3,7 +3,7 @@ const router = express.Router()
 const upload = require("../middleware/uploadMiddleware")
 const auth = require("../middleware/authMiddleware")
 const {updateUsernameValidation, updateEmailValidation, updatePasswordValidation, forgotPasswordValidation, resetPasswordValidation} = require("../middleware/authValidator")
-const {getUserInfo, authorizeUser, logout, updateUsername, updateEmail, updatePassword, forgotPassword, resetPassword, deleteAccount, updateProfilePic} = require("../controllers/usersController")
+const {getUserInfo, authorizeUser, logout, updateUsername, updateEmail, updatePassword, forgotPassword, resetPassword, deleteAccount, updateProfilePic, deleteProfilePic} = require("../controllers/usersController")
 
 // GET USER INFO
 router.get("/me", auth, getUserInfo)
@@ -24,7 +24,10 @@ router.put("/update-email", updateEmailValidation, updateEmail)
 router.put("/change-password", updatePasswordValidation, updatePassword)
 
 // UPDATE PROFILE IMAGE
-router.put("/update-profile-pic", upload.single("profile_img"), updateProfilePic)
+router.put("/update-profile-pic", auth, upload.single("profile_img"), updateProfilePic)
+
+// DELETE PROFILE IMAGE
+router.delete("/delete-profile-pic", auth, deleteProfilePic)
 
 // FORGOT PASSWORD
 router.post("/forgot-password", forgotPasswordValidation, forgotPassword)
