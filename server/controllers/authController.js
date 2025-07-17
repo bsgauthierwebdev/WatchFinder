@@ -151,7 +151,7 @@ const resendVerificationEmail = async (req, res) => {
             return res.status(404).json({error: "No account found with that email"})
         }
 
-        if (!user.is_verified) {
+        if (user.is_verified) {
             return res.status(400).json({error: "Email has already been verified"})
         }
 
