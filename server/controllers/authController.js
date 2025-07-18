@@ -194,18 +194,19 @@ const loginUser = async (req, res) => {
     const {email, password} = req.body
 
     try {
-        const user = await pool.query(
+        const result = await pool.query(
             'SELECT * FROM users WHERE email = $1',
             [email]
         )
+        const user = result.rows[0]
 
-        // console.log(user.rows[0])
+        // console.log(user)
 
-        if (user.rows.length === 0) {
+        if (!user) {
             return res.status(401).json({error: "Invalid email or password"})
         }
 
-        const valid = await bcrypt.compare(password, user.rows[0].password)
+        const valid = await bcrypt.compare(password, user.password)
 
         // console.log(valid)
 
@@ -213,9 +214,24 @@ const loginUser = async (req, res) => {
             return res.status(401).json({error: "Invalid email or password"})
         }
 
-        const token = jwt.sign({user_id: user.rows[0].user_id}, JWT_SECRET, {expiresIn: '1h'})
+        if (!user.is_verified) {
+            return res.status(403).json({
+                error: "Email not verified",
+                reason: "unverified"
+            })
+        }
 
-        res.json({token})
+        const token = jwt.sign({user_id: user.user_id}, JWT_SECRET, {expiresIn: '1h'})
+
+        res.json({
+            token,
+            user: {
+                user_id: user.user_id,
+                username: user.username,
+                email: user.email,
+                is_verified: user.is_verified
+            }
+        })
 
     } catch (err) {
         console.error(err)
