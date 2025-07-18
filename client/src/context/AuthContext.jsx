@@ -7,7 +7,10 @@ const AuthContext = createContext()
 export const useAuth = () => useContext(AuthContext)
 
 const AuthProvider = ({ children }) => {
-  const [userData, setUserData] = useState(null)
+  const [userData, setUserData] = useState(() => {
+    const stored = localStorage.getItem("userData")
+    return stored ? JSON.parse(stored) : null
+  })
   const [loading, setLoading] = useState(true)
 
   const fetchUser = async () => {
@@ -50,6 +53,7 @@ const AuthProvider = ({ children }) => {
     const token = res.data.token
     setToken(token)
     await fetchUser()
+    return userData
   }
 
   const logout = () => {
