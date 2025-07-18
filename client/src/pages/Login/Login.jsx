@@ -13,13 +13,38 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError("")
+
     try {
       await login(email, password)
       navigate("/dashboard")
 
     } catch (err) {
       console.error("Login failed: ", err)
-      setError("Invalid credentials")
+
+      const reason = err?.response?.data?.reason
+      if (reason === "unverified") {
+        try {
+          const res = await fetch("/api/auth/resend-verification", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({email})
+          })
+
+          if (!res.ok) throw new Error("Failed ro resend email")
+
+          navigate("/verify-email", {
+            state: {
+              email,
+              message: "Your account isn't verified. We've sent you a new verification email"
+            }
+          })
+        } catch (err) {
+          console.error("Failed to resend verification email: ", err)
+          setError("Couldn't resend verification email. Please try again later")
+        }
+      } else {
+        setError("Invalid credentials")
+      }
     }
   }
 
