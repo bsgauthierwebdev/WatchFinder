@@ -14,6 +14,7 @@ import ForgotPassword from "./pages/ForgotPassword/ForgotPassword"
 import ResetPassword from "./pages/ResetPassword/ResetPassword"
 import Profile from "./pages/Profile/Profile"
 import VerifyEmail from "./pages/VerifyEmail/VerifyEmail"
+import Verified from "./pages/Verified/Verified"
 import "./App.css"
 
 const App = () => {
@@ -46,7 +47,9 @@ const App = () => {
             }
           />
           <Route path = "/register" element = {<Register />} />
+          <Route path = "/verify-email/" element = {<VerifyEmail />} />
           <Route path = "/verify-email/:token" element = {<VerifyEmail />} />
+          <Route path = "/verified" element = {<Verified />} />
           <Route path = "/listings" element = {<Listings />} />
           <Route path = "/preferences" element = {<Preferences />} />
           <Route path = "/favorites" element = {<Favorites />} />
