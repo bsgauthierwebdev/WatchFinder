@@ -30,7 +30,7 @@ const Register = () => {
     try {
       console.log("Form data being submitted: ", form)
       await register(form)
-      navigate("/dashboard")
+      navigate("/verify-email")
     } catch (err) {
       console.error("Registration error: ", err)
       setError(err.response?.data?.error || "Registration failed")
