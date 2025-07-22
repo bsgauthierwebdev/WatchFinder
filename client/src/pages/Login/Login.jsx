@@ -8,7 +8,7 @@ const Login = () => {
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const navigate = useNavigate()
-  const {login} = useAuth()
+  const {login, resendVerification} = useAuth()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -19,23 +19,17 @@ const Login = () => {
       navigate("/dashboard")
 
     } catch (err) {
-      console.error("Login failed: ", err)
+      console.error("Login failed: ", err?.response || err)
 
       const reason = err?.response?.data?.reason
       if (reason === "unverified") {
         try {
-          const res = await fetch("/api/auth/resend-verification", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({email})
-          })
-
-          if (!res.ok) throw new Error("Failed ro resend email")
+          await resendVerification(email)
 
           navigate("/verify-email", {
             state: {
               email,
-              message: "Your account isn't verified. We've sent you a new verification email"
+              message: "Your account isn't verified. We've send you a new verification email"
             }
           })
         } catch (err) {
