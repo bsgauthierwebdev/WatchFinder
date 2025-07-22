@@ -48,6 +48,15 @@ const AuthProvider = ({ children }) => {
     await fetchUser()
   }
 
+  const resendVerification = async (email) => {
+    try {
+      const res = await axios.post("/api/auth/resend-verification", {email})
+      return res.data
+    } catch (err) {
+      console.error("Failed to resend verification email: ", err.message)
+    }
+  }
+
   const login = async (email, password) => {
     const res = await axios.post("/api/auth/login", { email, password })
     const token = res.data.token
@@ -75,7 +84,7 @@ const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ userData, register, login, logout, refreshUserData, loading }}>
+    <AuthContext.Provider value={{ userData, register, resendVerification, login, logout, refreshUserData, loading }}>
       {children}
     </AuthContext.Provider>
   )
