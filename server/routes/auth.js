@@ -10,7 +10,7 @@ router.post("/register", registerValidation, registerUser)
 router.get("/verify-email/:token", verifyEmail)
 
 // VERIFY RESEND
-router.get("/resend-verification", resendVerificationEmail)
+router.post("/resend-verification", resendVerificationEmail)
 
 // LOGIN USER
 router.post("/login", loginValidation, loginUser)
