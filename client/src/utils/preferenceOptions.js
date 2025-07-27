@@ -1,0 +1,80 @@
+export const commonBrands = [
+    "Rolex", "Omega", "Patek Philippe", "Audemars Piguet", "Breitling", "Tudor", "Cartier", "Panerai", "ISC", "Seiko", "Jaeger-LeCoultre", 
+    "TAG Heuer", "Hublot", "Zenith", "Vacheron Constantin", "Longines", "A. Lange & Söhne", "Richard Mille", "Breguet", "Ulysse Nardin", 
+    "Hamilton", "NOMOS", "Oris", "Sinn"
+]
+
+export const allBrands = [
+    ...commonBrands, 
+ "A. Lange & Söhne", "Accutron", "Aerowatch", "Aigle", "Aigner", "Alain Silberstein", "Alexander Shorokhoff", "Alfred Dunhill", 
+ "Alfred Rochat & Fils", "Alpina", "Andersen Genève", "Andreas Strehler", "Angelus", "Angular Momentum", "Anonimo", "Apple", 
+ "Aquanautic", "Aquastar", "Aristo", "Armand Nicolet", "Armani", "Armin Strom", "Arnold & Son", "Artisanal", 
+ "Artya", "Askania", "Ateliers deMonaco", "Atlantic", "Audemars Piguet", "Auguste Reymond", "Auricoste", "Avier", 
+ "Azimuth", "B.R.M", "Ball", "Balmain", "Baltic", "Barington", "Baume & Mercier", "Bedat & Co", 
+ "Behrens", "Bell & Ross", "Benrus", "Benzinger", "Berne", "Bertolucci", "Beuchat", "Bifora", 
+ "Black-Out Concept", "Blacksand", "Blancpain", "blu", "Boegli", "Bogner Time", "Boldr", "Bomberg", 
+ "Borgeaud", "Boucheron", "Bovet", "Breguet", "Breil", "Breitling", "Bremont", "Brior", 
+ "Bruno Söhnle", "Bulgari", "Bulova", "Bunz", "Burberry", "BWC-Swiss", "Cadet Chronostar", "Candino", 
+ "Carl F. Bucherer", "Carlo Ferrara", "Carlo Maroni", "Cartier", "Casio", "Catamaran", "Catena", "Catorex", 
+ "Cattin", "Century", "Cerruti", "Certina", "Chanel", "Charmex", "Charriol", "Chase-Durer", 
+ "Chaumet", "Chopard", "Christiaan v.d. Klaauw", "Christophe Claret", "Christopher Ward", "Chronographe Suisse Cie", "Chronoswiss", "Churpfälzische Uhrenmanufaktur", 
+ "Citizen", "ck Calvin Klein", "Claude Bernard", "Claude Meylan", "Clerc", "Concord", "Condor", "Cornehl", 
+ "Cornelius & Cie", "Cortébert", "Corum", "Creo", "Cronus", "Cuervo y Sobrinos", "Cvstos", "CWC", 
+ "Cyclos", "Cyma", "Cyrus", "Czapek", "D.Dornblüth & Sohn", "Damasko", "Daniel Roth", "Dark Rush", 
+ "Davidoff", "Davosa", "De Bethune", "Decade", "Deep Blue", "De Grisogono", "DeLaCour", "DeLaneau", 
+ "Delma", "Devon", "Dewitt", "Diesel", "Dietrich", "Dior", "Dodane", "Dolce & Gabbana", 
+ "Dom Baiz International", "Doxa", "Dubey & Schaldenbrand", "DuBois 1785", "DuBois et fils", "Dugena", "Dürmeister", "Ebel", 
+ "Eberhard & Co.", "Echo/Neutra", "Edox", "Egotempo", "El Charro", "Election", "Elgin", "Elysee", 
+ "Enicar", "Ennebi", "Epos", "Ernest Borel", "Ernst Benz", "Erwin Sattler", "Esprit", "Eterna", 
+ "Eulit", "Eulux", "F.P.Journe", "Fabergé", "Favre-Leuba", "Feldo", "Fendi", "Festina", 
+ "Fiorucci", "Flik Flak", "Fluco", "Formex", "Fortis", "Fossil", "Franck Dubarry", "Franck Muller", 
+ "Franc Vila", "Frederique Constant", "Furlan Marri", "Gaga Milano", "Gallet", "Gant", "Garmin", "Gerald Charles", 
+ "Gérald Genta", "Gevril", "Gigandet", "Girard Perregaux", "Giuliano Mazzuoli", "Glashütte Original", "Glycine", "Graf", 
+ "Graham", "Grand Seiko", "Greubel Forsey", "Grönefeld", "Grovana", "Gruen", "Gübelin", "GUB Glashütte", 
+ "Gucci", "Guess", "Gul Watches", "Guy Laroche", "H.I.D. Watch", "H.Moser & Cie.", "Habring²", "Haemmer", 
+ "Hagal", "Hamilton", "Hanhart", "Harry Winston", "Hautlence", "HD3", "Hebdomas", "Helvetia", 
+ "Hentschel Hamburg", "Hermès", "Herzog", "Heuer", "Hirsch", "Hublot", "Hugo Boss", "HYT", 
+ "Ice Watch", "Ikepod", "Illinois", "Ingersoll", "Invicta", "Iron Annie", "IWC", "Jacob & Co.", 
+ "Jacques Etoile", "Jacques Lemans", "Jaeger-LeCoultre", "Jaermann & Stübi", "Jaquet-Droz", "JB Gioacchino", "Jean d'Eve", "Jean Lassale", 
+ "Jean Marcel", "JeanRichard", "Jorg Hysek", "Jules Jürgensen", "Junghans", "Junkers", "Juvenia", "Kelek", 
+ "KHS", "Kienzle", "Kleber Uhrenatelier", "Kobold", "Konstantin Chaykin", "Korloff", "Krieger", "Kronsegler", 
+ "Kurono Tokyo", "L.Leroy", "L'Epée", "Laco", "Lacoste", "Lancaster", "Lanco", "Lang & Heyne", 
+ "Laurent Ferrier", "Lebeau-Courally", "Leinfelder", "Lemania", "Leonidas", "Limes", "Linde Werdelin", "Lip", 
+ "Liv Watches", "Locman", "Longines", "Lorenz", "Lorus", "Louis Erard", "Louis Moinet", "Louis Vuitton", 
+ "Louis XVI", "Lucien Rochat", "Ludovic Ballouard", "Luminox", "Lüm-Tec", "M.A.D. Editions", "M&M Swiss Watch", "Marburger", 
+ "Marcello C.", "Margi", "Marlboro", "Martin Braun", "Marvin", "Maserati", "Mathey-Tissot", "Mauboussin", 
+ "Maurice Blum", "Maurice de Mauriac", "Maurice Lacroix", "Mb&f", "Meccaniche Veloci", "Meistersinger", "Mercury", "MEXX Time", 
+ "Meyers", "Michael Bittel", "Michael Kors", "Michele", "Michel Herbelin", "Michel Jordi", "Mido", "Milleret", 
+ "Milus", "Minerva", "Ming", "Momo Design", "Mondaine", "Mondia", "Montano", "Montblanc", 
+ "Montega", "Moritz Grossmann", "Movado", "Mühle Glashütte", "N.B. Yäeger", "N.O.A", "Naj-Oleari", "Nautica", 
+ "Nauticfish", "Nethuns", "Nina Ricci", "Nivada", "Nivrel", "Nixon", "NOMOS", "Norqain", 
+ "ODM", "Officina del Tempo", "Ollech & Wajs", "Omega", "Orator", "Orbita", "Orfina", "Orient", 
+ "Oris", "Out of Order", "Panerai", "Parmigiani Fleurier", "Patek Philippe", "Paul Picot", "Pequignet", "Perigáum", 
+ "Perrelet", "Perseo", "Phantoms", "Philip Stein", "Philip Watch", "Piaget", "Pierre Balmain", "Pierre Cardin", 
+ "Pierre DeRoche", "Pierre Kunz", "Police", "Poljot", "Porsche Design", "Preisig Schaffhausen", "Prim", "Pro-Hunter", 
+ "Pryngeps", "Pulsar", "Quinting", "Rado", "Raidillon", "Rainer Brand", "Rainer Nienaber", "Raketa", 
+ "Ralf Tech", "Ralph Lauren", "Raymond Weil", "Rebellion", "Record", "REC Watches", "René Mouris", "Ressence", 
+ "Revue Thommen", "RGM", "Richard Mille", "Roamer", "Roger Dubuis", "Rolex", "Romain Jerome", "Rotary", 
+ "Rothenschild", "RSW", "Ryser Kentfield", "S.T. Dupont", "Salvatore Ferragamo", "Sandoz", "Sarcar", "Scalfaro", 
+ "Schaumburg", "Schwarz Etienne", "Sea-God", "Sea-Gull", "Sector", "Seiko", "Sevenfriday", "Shinola", 
+ "Sicura", "Sinn", "Skagen", "Slava", "Snyper", "Sothis", "Speake-Marin", "Spinnaker", 
+ "Squale", "St. Gallen", "Steinhart", "Stowa", "Strom", "Studio Underd0g", "Stuhrling", "Swatch", 
+ "Swiss Military", "TAG Heuer", "Tavannes", "TB Buti", "Technomarine", "Technos", "Tecnotempo", "Temption", 
+ "Tempvs Compvtare", "Tendence", "Terra Cielo Mare", "Theorein", "Thomas Ninchritz", "Tiffany", "Timberland Watches", "Timex", 
+ "Tissot", "Titus", "Tommy Hilfiger", "Tonino Lamborghini", "Traser", "Tudor", "Tutima", "TW Steel", 
+ "Ublast", "U-Boat", "Ulysse Nardin", "Union Glashütte", "Universal Genève", "Urban Jürgensen", "Urwerk", "Vacheron Constantin", 
+ "Valbray", "Valentino", "Van Cleef & Arpels", "Van Der Bauwede", "Vangarde", "Venezianico", "Ventura", "Versace", 
+ "Vianney Halter", "Viceroy", "Victorinox Swiss Army", "Vigoria Miletto", "Vincent Calabrese", "Visconti", "Vixa", "Vogard", 
+ "Vollmer", "Volna", "Von Wangenheim", "Vostok", "Vulcain", "Wakmann", "Waltham", "Welder", 
+ "Wempe", "Wenger", "Wittnauer", "Wyler", "Wyler Vetta", "Xemex", "Xetum", "Yantar", 
+ "Yema", "Yves Saint Laurent", "Zeitwinkel", "Zelos", "Zenith", "Zeno-Watch Basel", "ZentRa", "Zeppelin", 
+ "Zodiac", "ZRC"
+].filter((v, i, self) => self.indexOf(v) === i) // Remove duplicates, if needed
+
+export const platforms = ["eBay", "Chrono24", "WatchBox"]
+export const movements = ["Automatic", "Manual", "Quartz"]
+export const strapStyles = ["Leather", "Rubber", "Bracelet", "NATO"]
+export const watchStyles = ["Dress", "Diver", "Pilot", "Field", "Chronograph", "Tourbillon"]
+export const conditions = ["New", "Like New", "Very Good", "Good", "Fair", "Poor"]
+export const dialColors = ["Black", "White", "Blue", "Green", "Silver", "Gold"]
+export const frequencyOptions = ["Daily", "Weekly", "Bi-Weekly", "Monthly"]
