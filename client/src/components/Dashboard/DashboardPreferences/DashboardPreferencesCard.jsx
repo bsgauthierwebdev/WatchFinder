@@ -82,9 +82,9 @@ const DashboardPreferenceCard = (props) => {
                 </p>
                 <p><strong>Dial Colors: </strong>
                     {readDialColors.length > 0
-                        ? readMovements.map((m, i) => (
+                        ? readDialColors.map((m, i) => (
                             <span key = {i}>
-                                {capitalize(m)}{i < readMovements.length - 1 ? ", " : ""}
+                                {capitalize(m)}{i < readDialColors.length - 1 ? ", " : ""}
                             </span>
                         )) : "Not specified"}
                 </p>
