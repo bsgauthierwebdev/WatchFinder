@@ -116,7 +116,7 @@ const DashboardPreferenceCard = (props) => {
                 <p><strong>Alert Frequency: </strong>{capitalize(frequency) || "Not specified"}</p>
             </div>
             <div className="dashboard-preferences-footer">
-                <a href = "/matches" className = "view-all-link">Edit Your Preferences</a>
+                <a href = "/preferences" className = "view-all-link">Edit Your Preferences</a>
             </div>
         </div>
     )
