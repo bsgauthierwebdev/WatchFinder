@@ -1,0 +1,87 @@
+.preferences-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.preferences-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 2rem;
+}
+
+.preferences-header {
+    text-align: center;
+}
+
+.preferences-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.preferences-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.location, .frequency {
+    display: flex;
+    flex-direction: column;
+}
+
+.location-label, .frequency-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.location-input, .frequency-select {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.preferences-submit {
+    display: flex;
+    justify-content: center;
+}
+
+.preferences-btn {
+    background-color: #1d4ed8;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.preferences-btn:hover:enabled {
+    background-color: #1e40af;
+}
+
+.preferences-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed
+}
+
+.message-success {
+    margin-top: 1rem;
+    color: #047857;
+    font-weight: 500;
+    text-align: center;
+}
+
+.message-error {
+    margin-top: 1rem;
+    color: #dc2626;
+    font-weight: 500;
+    text-align: center;
+}
