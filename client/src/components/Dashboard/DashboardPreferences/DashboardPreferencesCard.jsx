@@ -58,7 +58,7 @@ const DashboardPreferenceCard = (props) => {
                 </p>
                 <p><strong>Movement: </strong>
                     {readMovements.length > 0
-                        ? readMovements.map((m, i) => (
+                        ? readMovements.sort((a, b) => a.localeCompare(b)).map((m, i) => (
                             <span key = {i}>
                                 {capitalize(m)}{i < readMovements.length - 1 ? ", " : ""}
                             </span>
@@ -66,14 +66,14 @@ const DashboardPreferenceCard = (props) => {
                 </p>
                 <p><strong>Strap Style: </strong>
                     {readStrapStyles.length > 0
-                        ? readStrapStyles.map((m, i) => (
+                        ? readStrapStyles.sort((a, b) => a.localeCompare(b)).map((m, i) => (
                             <span key = {i}>
                                 {capitalize(m)}{i < readStrapStyles.length - 1 ? ", " : ""}
                             </span>
                         )) : "Not specified"}
                 </p>
                 <p><strong>Watch Style: </strong>
-                    {readWatchStyles.length > 0
+                    {readWatchStyles.sort((a, b) => a.localeCompare(b)).length > 0
                         ? readWatchStyles.map((m, i) => (
                             <span key = {i}>
                                 {capitalize(m)}{i < readWatchStyles.length - 1 ? ", " : ""}
@@ -81,7 +81,7 @@ const DashboardPreferenceCard = (props) => {
                         )) : "Not specified"}
                 </p>
                 <p><strong>Dial Colors: </strong>
-                    {readDialColors.length > 0
+                    {readDialColors.sort((a, b) => a.localeCompare(b)).length > 0
                         ? readDialColors.map((m, i) => (
                             <span key = {i}>
                                 {capitalize(m)}{i < readDialColors.length - 1 ? ", " : ""}
@@ -97,7 +97,7 @@ const DashboardPreferenceCard = (props) => {
                         )) : "Not specified"}
                 </p>
                 <p><strong>Platforms: </strong>
-                    {readPlatforms.length > 0
+                    {readPlatforms.sort((a, b) => a.localeCompare(b)).length > 0
                         ? readPlatforms.map((m, i) => (
                             <span key = {i}>
                                 {capitalize(m)}{i < readPlatforms.length - 1 ? ", " : ""}
@@ -105,7 +105,7 @@ const DashboardPreferenceCard = (props) => {
                         )) : "Not specified"}
                 </p>
                 <p><strong>Brands: </strong>
-                    {readBrands.length > 0
+                    {readBrands.sort((a, b) => a.localeCompare(b)).length > 0
                         ? readBrands.map((m, i) => (
                             <span key = {i}>
                                 {capitalize(m)}{i < readBrands.length - 1 ? ", " : ""}
