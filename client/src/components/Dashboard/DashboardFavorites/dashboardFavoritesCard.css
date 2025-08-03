@@ -14,7 +14,7 @@
     margin-bottom: 20px;
 }
 
-.favorite-card {
+.dashboard-favorite-card {
     /* border: 1px solid #ddd; */
     border-radius: 8px;
     overflow: hidden;
@@ -30,13 +30,13 @@
     position: relative;
 }
 
-.favorite-card:hover {
+.dashboard-favorite-card:hover {
     transform: scale(1.02);
     background: #f9f9f9;
     z-index: 2;
 }
 
-.favorite-img {
+.dashboard-favorite-img {
     /* width: 100%; */
     height: 300px;
     object-fit: cover;
@@ -45,16 +45,16 @@
     display: block;
 }
 
-.favorite-card-info {
+.dashboard-favorite-card-info {
     font-size: 0.95rem;
     color: #333;
 }
 
-.favorite-card-info h4 {
+.dashboard-favorite-card-info h4 {
     margin: 0.5rem 0;
 }
 
-.no-favorites-message {
+.dashboard-no-favorites-message {
     font-size: 14px;
     color: #333;
     font-style: italic;
@@ -65,25 +65,25 @@
     margin-top: 1rem;
 }
 
-.view-all-link {
+.dashboard-view-all-link {
     font-size: 0.9rem;
     color: #0077cc;
     text-decoration: none;
 }
 
-.view-all-link:hover {
+.dashboard-view-all-link:hover {
     text-decoration: underline;
 }
 
-.swiper {
+.dashboard-swiper {
     padding-bottom: 2rem;
 }
 
-.swiper-wrapper {
+.dashboard-swiper-wrapper {
     padding: 1rem;
 }
 
-.swiper-slide {
+.dashboard-swiper-slide {
     overflow: visible;
 }
 

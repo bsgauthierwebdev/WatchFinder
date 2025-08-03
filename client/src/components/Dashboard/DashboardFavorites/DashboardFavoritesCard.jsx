@@ -29,7 +29,7 @@ const DashboardFavoritesCard = ({favorites}) => {
         >
           {favorites.map((fav) => (
             <SwiperSlide key = {fav.id}>
-              <div className="favorite-card">
+              <div className="dashboard-favorite-card">
                 {fav.images?.length > 0 && (
                   <img 
                     src = {fav.images[0]} 
@@ -38,7 +38,7 @@ const DashboardFavoritesCard = ({favorites}) => {
                   />
                 )}
                 
-                <div className="favorite-card-info">
+                <div className="dashboard-favorite-card-info">
                   <h4>{fav.title}</h4>
                   <p><strong>Brand: </strong>{fav.brand}</p>
                   <p><strong>Price: </strong>{fav.price}</p>
@@ -49,7 +49,7 @@ const DashboardFavoritesCard = ({favorites}) => {
           ))}
         </Swiper>
       ) : (
-        <div className="no-favorites-message">
+        <div className="dashboard-no-favorites-message">
           You haven't saved any matches yet
         </div>
       )}
