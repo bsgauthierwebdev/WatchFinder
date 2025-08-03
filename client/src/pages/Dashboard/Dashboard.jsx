@@ -13,7 +13,7 @@ const Dashboard = () => {
 
   const {user, preferences, matched_results, favorites} = userData
 
-  console.log("Image source: ", `http://localhost:8800${user.profile_img}`)
+  // console.log("Image source: ", `http://localhost:8800${user.profile_img}`)
 
   return (
     <div className="dashboard-container">
