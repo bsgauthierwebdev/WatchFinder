@@ -1,9 +1,10 @@
 import { useAuth } from "../../context/AuthContext"
 import DashboardPreferenceCard from '../../components/Dashboard/DashboardPreferences/DashboardPreferencesCard';
 import DashboardMatchesCard from "../../components/Dashboard/DashboardMatches/DashboardMatchesCard"
-import "./dashboard.css"
 import DashboardFavoritesCard from "../../components/Dashboard/DashboardFavorites/DashboardFavoritesCard";
 import DashboardUserCard from "../../components/Dashboard/DashboardUserCard/DashboardUserCard";
+import "./dashboard.css"
+
 
 const Dashboard = () => {
   const {userData, loading} = useAuth()
