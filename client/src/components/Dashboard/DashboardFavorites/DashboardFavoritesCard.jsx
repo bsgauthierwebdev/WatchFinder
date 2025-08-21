@@ -34,7 +34,7 @@ const DashboardFavoritesCard = ({favorites}) => {
                   <img 
                     src = {fav.images[0]} 
                     alt = {fav.title}
-                    className="favorite-img" 
+                    className="dashboard-favorite-img" 
                   />
                 )}
                 
@@ -56,7 +56,7 @@ const DashboardFavoritesCard = ({favorites}) => {
       
       {hasFavorites ? (
         <div className="dashboard-favorites-footer">
-            <a href = "/matches" className = "view-all-link">View All Favorites</a>
+            <a href = "/matches" className = "dashboard-view-all-link">View All Favorites</a>
         </div>
       ) : (
         null
