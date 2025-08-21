@@ -1,0 +1,49 @@
+.favorites-card-container {
+    width: 100%;
+}
+
+.favorites-card-listings {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.favorites-card-wrapper {
+    width: 300px;
+    flex: 0 0 auto;
+    margin: 20px;
+}
+
+.favorites-card {
+    /* width: 260px; */
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.favorites-card:hover {
+    transform: translateY(-4px);
+}
+
+.favorites-card-img {
+    width: 95%;
+    height: 200px;
+    border-radius: 8px;
+    object-fit: cover;
+    display: block;
+}
+
+.favorites-card-info h4 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+}
+
+.favorites-card-info {
+    font-size: 0.9rem;
+    margin: 4px 0;
+    color: #555;
+    padding: 12px;
+}
